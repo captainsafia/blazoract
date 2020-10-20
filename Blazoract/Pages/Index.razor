@@ -1,0 +1,21 @@
+@page "/"
+
+@using Microsoft.DotNet.Interactive.CSharp
+@using Microsoft.DotNet.Interactive.Commands
+@using Microsoft.DotNet.Interactive
+@using System.Threading
+@using System
+
+<Cell.CellComponent Kernel="@kernel"/>
+
+@code {
+    CompositeKernel kernel;
+
+    protected override void OnInitialized() {
+        kernel = new CompositeKernel()
+        {
+            new CSharpKernel()
+        };
+        kernel.DefaultKernelName = "csharp";
+    }
+}

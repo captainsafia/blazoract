@@ -1,0 +1,12 @@
+@namespace Cell
+
+<div class="toolbar">
+    <button @onclick="RunCellCallback">
+        Run cell
+    </button>
+</div>
+
+@code {
+    [Parameter]
+    public EventCallback<MouseEventArgs> RunCellCallback { get; set; }
+}

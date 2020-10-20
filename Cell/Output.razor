@@ -1,0 +1,13 @@
+@namespace Cell
+
+<div class="output">
+    @OutputContent
+</div>
+
+@code {
+    [Parameter]
+    public string OutputContent {get; set; }  
+
+    [Parameter]
+    public EventCallback<string> OutputContentChanged { get; set; }
+}
