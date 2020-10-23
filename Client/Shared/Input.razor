@@ -1,0 +1,17 @@
+<input placeholder="Write some code here..." value="@content" @oninput="OnCodeChanged" />
+
+@code {
+    [Parameter]
+    public string Code { get; set; }
+
+    [Parameter]
+    public EventCallback<string> CodeChanged { get; set; }
+
+    private string content = "";
+
+    private Task OnCodeChanged(ChangeEventArgs e)
+    {
+        content = e.Value.ToString();
+        return CodeChanged.InvokeAsync(content);
+    }
+}

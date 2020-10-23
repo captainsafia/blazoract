@@ -1,0 +1,23 @@
+﻿@using System.Net.Http
+
+@inject HttpClient Http
+
+<div class="cell">
+    <Toolbar RunCellCallback="@RunCell" />
+    <Input @bind-Code="@input" />
+    <div class="break" />
+    <Output @bind-OutputContent="@output" />
+</div>
+
+@code {
+    private string input = "";
+
+    private ExecuteResult output = new ExecuteResult();
+
+    private async Task RunCell()
+    {
+        var request = new ExecuteRequest(input);
+        var response = await Http.PostAsJsonAsync("run", request);
+        output = await response.Content.ReadFromJsonAsync<ExecuteResult>();
+    }
+}

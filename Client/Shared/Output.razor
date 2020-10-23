@@ -1,0 +1,11 @@
+<div class="output">
+    @OutputContent.Output
+</div>
+
+@code {
+    [Parameter]
+    public ExecuteResult OutputContent { get; set; }
+
+    [Parameter]
+    public EventCallback<ExecuteResult> OutputContentChanged { get; set; }
+}

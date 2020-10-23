@@ -1,0 +1,10 @@
+<div class="toolbar">
+    <button @onclick="RunCellCallback">
+        &#x25BA;
+    </button>
+</div>
+
+@code {
+    [Parameter]
+    public EventCallback<MouseEventArgs> RunCellCallback { get; set; }
+}
