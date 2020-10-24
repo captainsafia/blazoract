@@ -1,0 +1,30 @@
+﻿@using System.Net.Http
+
+@inject HttpClient Http
+
+<div class="cell">
+    <div class="toolbar">
+        <button @onclick="RunCell">
+            &#x25BA;
+        </button>
+    </div>
+    <input placeholder="Write some code here..." value="@Content" />
+    <div class="break" />
+    <div class="output">
+        @result.Output
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Content { get; set; }
+
+    private ExecuteResult result = new ExecuteResult();
+
+    private async Task RunCell()
+    {
+        var request = new ExecuteRequest(Content);
+        var response = await Http.PostAsJsonAsync("run", request);
+        result = await response.Content.ReadFromJsonAsync<ExecuteResult>();
+    }
+}

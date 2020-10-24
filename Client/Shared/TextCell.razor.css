@@ -1,0 +1,7 @@
+.cell {
+    display: flex;
+    flex: 0 0 100%;
+    flex-wrap: wrap;
+    margin: 10px;
+    padding: 0 10px;
+}

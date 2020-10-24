@@ -1,1 +1,13 @@
-<div contenteditable="true" />
+<div contenteditable="true" class="cell">
+    @if (Content != null)
+    {
+        @Content
+    } else {
+        <p class="placeholder">Enter your text here...</p>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string Content { get; set; }
+}

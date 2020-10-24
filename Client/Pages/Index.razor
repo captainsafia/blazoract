@@ -1,7 +1,34 @@
 @page "/"
 
+@using System;
+@using System.Collections;
+@using System.Linq;
+
+@inject ContentService content
+
 <div class="cells">
-    <Cell />
-    <Cell />
-    <TextCell />
+    @if (cells != null)
+    {
+        @foreach (var cell in cells.Cast<Cell>().Select((value, index) => new { index, value }))
+        {
+            @if (cell.value.Type == CellType.Code)
+            {
+                <CodeCell Content="@cell.value.Content" />
+            }
+            else
+            {
+                <TextCell Content="@cell.value.Content" />
+            }
+            <NewCell Position="@cell.index" />
+        }
+    }
 </div>
+
+@code {
+    ArrayList cells;
+    protected override void OnInitialized()
+    {
+        cells = content.GetInitialContent();
+        Console.WriteLine(cells);
+    }
+}

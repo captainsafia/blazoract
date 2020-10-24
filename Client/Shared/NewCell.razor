@@ -1,0 +1,24 @@
+@inject ContentService content
+
+<div class="new-cell-toolbar">
+    <button @onclick="AddCodeCell">Add Code Cell</button>
+    <button @onclick="AddTextCell">Add Text Cell</button>
+</div>
+
+@code {
+    [Parameter]
+    public int Position { get; set; }
+
+    public void AddCodeCell()
+    {
+        Console.WriteLine("AddCodeCell");
+        content.AddCell("", CellType.Code);
+    }
+
+    public void AddTextCell()
+    {
+        Console.WriteLine("AddTextCell");
+        var list = content.AddCell("", CellType.Text);
+        Console.WriteLine(list.Count);
+    }
+}
