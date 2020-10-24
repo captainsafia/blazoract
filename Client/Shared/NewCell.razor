@@ -12,13 +12,14 @@
     public void AddCodeCell()
     {
         Console.WriteLine("AddCodeCell");
-        content.AddCell("", CellType.Code);
+        content.AddCell("", CellType.Code, Position + 1);
     }
+    
 
     public void AddTextCell()
     {
         Console.WriteLine("AddTextCell");
-        var list = content.AddCell("", CellType.Text);
+        var list = content.AddCell("Add text here...", CellType.Text, Position + 1);
         Console.WriteLine(list.Count);
     }
 }

@@ -14,15 +14,19 @@ namespace blazoract.Client.Data
             { new Cell("3+3") },
 
         };
+
+        public event Action OnChange;
+
         public ContentService() { }
         public ArrayList GetInitialContent()
         {
             return Content;
         }
 
-        public ArrayList AddCell(string content, CellType type)
+        public ArrayList AddCell(string content, CellType type, int position)
         {
-            Content.Add(new Cell(content, type));
+            Content.Insert(position, new Cell(content, type));
+            OnChange.Invoke();
             return Content;
         }
 
