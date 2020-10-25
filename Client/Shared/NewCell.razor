@@ -9,17 +9,18 @@
     [Parameter]
     public int Position { get; set; }
 
-    public void AddCodeCell()
+    [Parameter]
+    public string NotebookId { get; set; }
+
+    public async Task AddCodeCell()
     {
         Console.WriteLine("AddCodeCell");
-        content.AddCell("", CellType.Code, Position + 1);
+        await content.AddCell(NotebookId, "", CellType.Code, Position + 1);
     }
-    
 
-    public void AddTextCell()
+    public async Task AddTextCell()
     {
         Console.WriteLine("AddTextCell");
-        var list = content.AddCell("Add text here...", CellType.Text, Position + 1);
-        Console.WriteLine(list.Count);
+        await content.AddCell(NotebookId, "Add text here...", CellType.Text, Position + 1);
     }
 }

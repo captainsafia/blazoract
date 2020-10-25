@@ -4,8 +4,6 @@
 
 @inject ContentService content
 
-
-
 <div class="cells">
     @if (cells != null)
     {
@@ -18,16 +16,19 @@
             {
                 <TextCell Content="@cell.Content" />
             }
-            <NewCell Position="@cell.Position" />
+            <NewCell Position="@cell.Position" NotebookId="@NotebookId" />
         </Virtualize>
     }
 </div>
 
 @code {
+    [Parameter]
+    public string NotebookId { get; set; } = "_default_notebook";
     List<Cell> cells;
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        cells = content.GetInitialContent();
+        cells = await content.GetById(NotebookId);
+
         Console.WriteLine(cells);
         content.OnChange += StateHasChanged;
     }

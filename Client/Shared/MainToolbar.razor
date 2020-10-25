@@ -1,4 +1,26 @@
+@inject ILocalStorageService storage
+@inject ContentService content
+@inject NavigationManager navigation
+
 <div class="main-toolbar">
+    <button @onclick="NewNotebook">New</button>
     <button>Save</button>
     <button>Print</button>
 </div>
+@code {
+    private async Task NewNotebook()
+    {
+        var id = await content.CreateNewNotebook();
+        navigation.NavigateTo($"/notebook/{id}");
+    }
+
+    private async Task SaveNotebook()
+    {
+        await storage.SetItemAsync("notebook", "foo");
+    }
+
+    private void PrintNoteook()
+    {
+        navigation.NavigateTo($"/notebook/id/print");
+    }
+}

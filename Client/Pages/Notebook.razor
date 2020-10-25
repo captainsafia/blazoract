@@ -1,0 +1,8 @@
+@page "/notebook/{NotebookId}"
+
+<Cells NotebookId="@NotebookId" />
+
+@code {
+    [Parameter]
+    public string NotebookId { get; set; }
+}
