@@ -1,29 +1,30 @@
 @using System;
-@using System.Collections;
+@using System.Collections.Generic;
 @using System.Linq;
 
 @inject ContentService content
 
+
+
 <div class="cells">
     @if (cells != null)
     {
-        @foreach (var cell in cells.Cast<Cell>().Select((value, index) => new { index, value }))
-        {
-            @if (cell.value.Type == CellType.Code)
+        <Virtualize Context="cell" Items="@cells">
+            @if (cell.Type == CellType.Code)
             {
-                <CodeCell Content="@cell.value.Content" />
+                <CodeCell Content="@cell.Content" />
             }
             else
             {
-                <TextCell Content="@cell.value.Content" />
+                <TextCell Content="@cell.Content" />
             }
-            <NewCell Position="@cell.index" />
-        }
+            <NewCell Position="@cell.Position" />
+        </Virtualize>
     }
 </div>
 
 @code {
-    ArrayList cells;
+    List<Cell> cells;
     protected override void OnInitialized()
     {
         cells = content.GetInitialContent();
