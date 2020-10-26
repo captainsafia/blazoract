@@ -1,4 +1,5 @@
 ﻿@using System.Net.Http
+@using MonacoRazor
 
 @inject HttpClient Http
 
@@ -8,7 +9,7 @@
             &#x25BA;
         </button>
     </div>
-    <input placeholder="Write some code here..." @bind="cell.Content" @bind:event="oninput" />
+    <CodeEditor @bind-Code="cell.Content" OnCompletionsRequested="GetCompletionsAsync" />
     <div class="break" />
     <div class="output">
         @result.Output
@@ -24,7 +25,19 @@
     private async Task RunCell()
     {
         var request = new ExecuteRequest(cell.Content);
-        var response = await Http.PostAsJsonAsync("run", request);
+        var response = await Http.PostAsJsonAsync("run/evaluatecell", request);
         result = await response.Content.ReadFromJsonAsync<ExecuteResult>();
+    }
+
+    private async Task<Suggestion[]> GetCompletionsAsync(string value, Position position)
+    {
+        var response = await Http.PostAsJsonAsync("run/getcompletions", new GetCompletionsRequest
+        {
+            Code = value,
+            Column = position.Column,
+            LineNumber = position.LineNumber
+        });
+
+        return await response.Content.ReadFromJsonAsync<Suggestion[]>();
     }
 }
