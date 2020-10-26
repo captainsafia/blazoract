@@ -3,8 +3,9 @@
 <div class="cells">
     @if (notebook != null && notebook.Cells != null)
     {
-        <Virtualize Context="cell" Items="@notebook.Cells">
-            @if (cell.Type == CellType.Code)
+        foreach (var cell in notebook.Cells)
+        {
+            if (cell.Type == CellType.Code)
             {
                 <CodeCell cell="@cell" />
             }
@@ -12,8 +13,9 @@
             {
                 <TextCell cell="@cell" />
             }
+
             <NewCell Position="@cell.Position" NotebookId="@NotebookId" />
-        </Virtualize>
+        }
     }
 </div>
 
