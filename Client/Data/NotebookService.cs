@@ -45,7 +45,7 @@ namespace blazoract.Client.Data
         public async Task<string> CreateNewNotebook()
         {
             var id = Guid.NewGuid().ToString("N");
-            var title = "Just a test";
+            var title = "New notebook";
             var notebook = new Notebook(id, title);
             notebook.Cells = new List<Cell>() { new Cell("", 0) };
             await _storage.SetItemAsync(id, notebook);

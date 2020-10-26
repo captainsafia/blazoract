@@ -24,7 +24,8 @@
 @code {
     [Parameter]
     public string NotebookId { get; set; }
-    Notebook notebook;
+    private Notebook notebook;
+
     protected override async Task OnInitializedAsync()
     {
         if (NotebookId != null)
@@ -37,9 +38,5 @@
         }
 
         content.OnChange += StateHasChanged;
-    }
-    protected override void OnAfterRender(bool firstRender)
-    {
-        Console.WriteLine("Just rendered....");
     }
 }

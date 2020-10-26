@@ -26,13 +26,11 @@
 
     public async Task AddCodeCell()
     {
-        Console.WriteLine("AddCodeCell");
         await content.AddCell(NotebookId ?? "_default_notebook", "", CellType.Code, Position + 1);
     }
 
     public async Task AddTextCell()
     {
-        Console.WriteLine("AddTextCell");
         await content.AddCell(NotebookId ?? "_default_notebook", "Add text here...", CellType.Text, Position + 1);
     }
 }

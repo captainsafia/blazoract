@@ -3,6 +3,7 @@
     flex: 0 0 100%;
     flex-wrap: wrap;
     margin: 10px;
+    border: 1px solid #bfbfbf;
 }
 
 .break {
