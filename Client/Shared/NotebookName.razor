@@ -1,0 +1,33 @@
+@inject IJSRuntime JSRuntime
+@inject ILocalStorageService storage
+
+<div class="notebook-name" contenteditable="true" @ref=nameDiv>
+    @name
+</div>
+
+@code {
+    private string name = "Test Name";
+
+    ElementReference nameDiv;
+
+    IJSObjectReference module;
+    protected override async Task OnInitializedAsync()
+    {
+        module = await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+            "./js/notebook-name.js");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+
+        await module.InvokeAsync<string>("registerListener", nameDiv);
+    }
+
+    [JSInvokable("RenameNotebook")]
+    public static async Task<string> RenameNotebook(string newName)
+    {
+
+        return await Task.FromResult("true");
+    }
+
+}

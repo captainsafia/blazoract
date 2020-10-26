@@ -1,11 +1,12 @@
 @inject ILocalStorageService storage
-@inject ContentService content
+@inject NotebookService content
 @inject NavigationManager navigation
 
 <div class="main-toolbar">
+    <NotebookName />
     <button @onclick="NewNotebook">New</button>
     <button>Save</button>
-    <button>Print</button>
+    <button>View All</button>
 </div>
 @code {
     private async Task NewNotebook()
@@ -21,6 +22,6 @@
 
     private void PrintNoteook()
     {
-        navigation.NavigateTo($"/notebook/id/print");
+        navigation.NavigateTo("/notebooks");
     }
 }

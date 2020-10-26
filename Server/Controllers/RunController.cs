@@ -33,6 +33,7 @@ namespace blazoract.Server.Controllers
         public async Task<ExecuteResult> PostAsync([FromBody] ExecuteRequest cell)
         {
             var request = await kernel.SendAsync(new SubmitCode(cell.Input), new CancellationToken());
+            Console.WriteLine(cell.Input);
             var result = new ExecuteResult();
             request.KernelEvents.Subscribe(x =>
             {

@@ -2,7 +2,7 @@
 @using System.Collections.Generic;
 @using System.Linq;
 
-@inject ContentService content
+@inject NotebookService content
 
 <div class="cells">
     @if (cells != null)
@@ -10,11 +10,11 @@
         <Virtualize Context="cell" Items="@cells">
             @if (cell.Type == CellType.Code)
             {
-                <CodeCell Content="@cell.Content" />
+                <CodeCell cell="@cell" />
             }
             else
             {
-                <TextCell Content="@cell.Content" />
+                <TextCell cell="@cell" />
             }
             <NewCell Position="@cell.Position" NotebookId="@NotebookId" />
         </Virtualize>

@@ -8,7 +8,7 @@
             &#x25BA;
         </button>
     </div>
-    <input placeholder="Write some code here..." value="@Content" />
+    <input placeholder="Write some code here..." @bind="cell.Content" @bind:event="oninput" />
     <div class="break" />
     <div class="output">
         @result.Output
@@ -17,13 +17,13 @@
 
 @code {
     [Parameter]
-    public string Content { get; set; }
+    public Cell cell { get; set; }
 
     private ExecuteResult result = new ExecuteResult();
 
     private async Task RunCell()
     {
-        var request = new ExecuteRequest(Content);
+        var request = new ExecuteRequest(cell.Content);
         var response = await Http.PostAsJsonAsync("run", request);
         result = await response.Content.ReadFromJsonAsync<ExecuteResult>();
     }
