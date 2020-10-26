@@ -11,7 +11,7 @@
     height: 0;
 }
 
-input {
+input, ::deep .editor {
     flex-grow: 1;
     padding:10px;
     border:0;

@@ -7,11 +7,14 @@ using Microsoft.DotNet.Interactive.Commands;
 using System.Threading;
 using Microsoft.DotNet.Interactive.Events;
 using blazoract.Shared;
+using MonacoRazor;
+using Microsoft.CodeAnalysis.Text;
+using System.Linq;
 
 namespace blazoract.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
     public class RunController : ControllerBase
     {
         private readonly ILogger<RunController> _logger;
@@ -25,7 +28,7 @@ namespace blazoract.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ExecuteResult> PostAsync([FromBody] ExecuteRequest cell)
+        public async Task<ExecuteResult> EvaluateCellAsync([FromBody] ExecuteRequest cell)
         {
             var request = await _kernel.SendAsync(new SubmitCode(cell.Input), new CancellationToken());
             var result = new ExecuteResult();
@@ -36,6 +39,27 @@ namespace blazoract.Server.Controllers
                 {
 
                     result.Output = ((DisplayEvent)x).Value;
+                }
+            });
+            return result;
+        }
+
+        [HttpPost]
+        public async Task<Suggestion[]> GetCompletionsAsync([FromBody] GetCompletionsRequest req)
+        {
+            var request = await _kernel.SendAsync(new RequestCompletions(req.Code, new LinePosition(req.LineNumber - 1, req.Column - 1)));
+            var result = Array.Empty<Suggestion>();
+            request.KernelEvents.Subscribe(x =>
+            {
+                if (x is CompletionsProduced completions)
+                {
+                    result = completions.Completions.Select(c => new Suggestion
+                    {
+                        Label = c.DisplayText,
+                        InsertText = c.InsertText,
+                        Kind = Enum.TryParse<CompletionItemKind>(c.Kind, out var parsedKind) ? parsedKind : CompletionItemKind.Property,
+                        Documentation = c.Documentation,
+                    }).ToArray();
                 }
             });
             return result;
