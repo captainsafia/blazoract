@@ -18,25 +18,23 @@ namespace blazoract.Server.Controllers
     {
         private readonly ILogger<RunController> _logger;
 
-        private CompositeKernel kernel;
+        private CompositeKernel _kernel;
 
-        public RunController(ILogger<RunController> logger)
+        public RunController(ILogger<RunController> logger, CompositeKernel kernel)
         {
             _logger = logger;
-            kernel = new CompositeKernel() {
-            new CSharpKernel()
-        };
-            kernel.DefaultKernelName = "csharp";
+            _kernel = kernel;
         }
 
         [HttpPost]
         public async Task<ExecuteResult> PostAsync([FromBody] ExecuteRequest cell)
         {
-            var request = await kernel.SendAsync(new SubmitCode(cell.Input), new CancellationToken());
+            var request = await _kernel.SendAsync(new SubmitCode(cell.Input), new CancellationToken());
             Console.WriteLine(cell.Input);
             var result = new ExecuteResult();
             request.KernelEvents.Subscribe(x =>
             {
+                Console.WriteLine(x);
                 if (x is DisplayEvent)
                 {
                     Console.WriteLine(x);

@@ -14,6 +14,8 @@ input {
     flex-grow: 1;
     padding:10px;
     border:0;
+    outline: 0;
+    font-family: monospace;
 }
 
 .output {
@@ -32,5 +34,5 @@ button {
 }
 
 button:hover {
-    color: blue;
+    color: #19b5fe;
 }

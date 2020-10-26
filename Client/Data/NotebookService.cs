@@ -4,6 +4,8 @@ using blazoract.Shared;
 using Blazored.LocalStorage;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Net.Http;
+using System.Net.Http.Json;
 
 namespace blazoract.Client.Data
 {
@@ -12,10 +14,13 @@ namespace blazoract.Client.Data
         public event Action OnChange;
 
         private ILocalStorageService _storage;
+        private HttpClient _http;
 
-        public NotebookService(ILocalStorageService storage)
+        public NotebookService(ILocalStorageService storage, HttpClient http)
         {
             _storage = storage;
+            _http = http;
+
             var id = Guid.NewGuid().ToString("N");
             var title = "Default Notebook";
             var notebook = new Notebook(id, title);
@@ -27,14 +32,14 @@ namespace blazoract.Client.Data
             notebook.Cells = initialContent;
             _storage.SetItemAsync("_default_notebook", notebook);
         }
-        public async Task<List<Cell>> GetInitialContent()
+        public async Task<Notebook> GetInitialContent()
         {
-            return await _storage.GetItemAsync<List<Cell>>("_default_notebook");
+            return await _http.GetFromJsonAsync<Notebook>("/data/default-notebook.json");
         }
 
-        public async Task<List<Cell>> GetById(string id)
+        public async Task<Notebook> GetById(string id)
         {
-            return await _storage.GetItemAsync<List<Cell>>(id);
+            return await _storage.GetItemAsync<Notebook>(id);
         }
 
         public async Task<string> CreateNewNotebook()

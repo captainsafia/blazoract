@@ -1,0 +1,13 @@
+button {
+    color: #bfbfbf;
+    background: none;
+    border: none;
+    outline: none;
+    text-align: center;
+    padding: 0 4px;
+    
+}
+
+.new-cell-toolbar {
+    text-align: center;
+}

@@ -3,10 +3,13 @@
 @inject NavigationManager navigation
 
 <div class="main-toolbar">
+    <h2>blazoract</h2>
     <NotebookName />
-    <button @onclick="NewNotebook">New</button>
-    <button>Save</button>
-    <button>View All</button>
+    <div class="right">
+        <a @onclick="NewNotebook">New</a>
+        <a>Save</a>
+        <a href="/notebooks">View All</a>
+    </div>
 </div>
 @code {
     private async Task NewNotebook()
@@ -18,10 +21,5 @@
     private async Task SaveNotebook()
     {
         await storage.SetItemAsync("notebook", "foo");
-    }
-
-    private void PrintNoteook()
-    {
-        navigation.NavigateTo("/notebooks");
     }
 }

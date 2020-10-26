@@ -19,8 +19,10 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-
-        await module.InvokeAsync<string>("registerListener", nameDiv);
+        if (module != null)
+        {
+            await module.InvokeAsync<string>("registerListener", nameDiv);
+        }
     }
 
     [JSInvokable("RenameNotebook")]

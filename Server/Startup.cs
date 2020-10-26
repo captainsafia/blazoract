@@ -7,6 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
 
+using Microsoft.DotNet.Interactive.CSharp;
+using Microsoft.DotNet.Interactive;
+using Microsoft.DotNet.Interactive.Commands;
+
 namespace blazoract.Server
 {
     public class Startup
@@ -25,6 +29,9 @@ namespace blazoract.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddSingleton<CompositeKernel>(new CompositeKernel() {
+            new CSharpKernel().UseDefaultFormatting().UseDotNetVariableSharing()
+        });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

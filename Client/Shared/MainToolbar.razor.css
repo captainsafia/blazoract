@@ -1,0 +1,28 @@
+.main-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0.5em;
+    background-color: #e8e8e8;
+    align-items: center;
+}
+
+h2 {
+    margin: 0;    
+}
+
+.right {
+    float: right;
+}
+
+a {
+    color: #bfbfbf;
+    text-decoration: none;
+    color: black;
+    padding: 0 12px;
+}
+
+a:hover {
+    color: #19b5fe;
+    font-weight: bold;
+}

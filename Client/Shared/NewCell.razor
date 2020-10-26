@@ -1,8 +1,20 @@
 @inject NotebookService content
 
 <div class="new-cell-toolbar">
-    <button @onclick="AddCodeCell">Add Code Cell</button>
-    <button @onclick="AddTextCell">Add Text Cell</button>
+    <button @onclick="AddCodeCell">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+            <path fill-rule="evenodd"
+            d="M4.72 3.22a.75.75 0 011.06 1.06L2.06 8l3.72 3.72a.75.75 0 11-1.06 1.06L.47 8.53a.75.75 0 010-1.06l4.25-4.25zm6.56 0a.75.75 0 10-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 101.06 1.06l4.25-4.25a.75.75 0 000-1.06l-4.25-4.25z">
+            </path>
+        </svg>
+    </button>
+    <button @onclick="AddTextCell">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+            <path fill-rule="evenodd"
+            d="M14.85 3H1.15C.52 3 0 3.52 0 4.15v7.69C0 12.48.52 13 1.15 13h13.69c.64 0 1.15-.52 1.15-1.15v-7.7C16 3.52 15.48 3 14.85 3zM9 11H7V8L5.5 9.92 4 8v3H2V5h2l1.5 2L7 5h2v6zm2.99.5L9.5 8H11V5h2v3h1.5l-2.51 3.5z">
+            </path>
+        </svg>
+    </button>
 </div>
 
 @code {
@@ -15,12 +27,12 @@
     public async Task AddCodeCell()
     {
         Console.WriteLine("AddCodeCell");
-        await content.AddCell(NotebookId, "", CellType.Code, Position + 1);
+        await content.AddCell(NotebookId ?? "_default_notebook", "", CellType.Code, Position + 1);
     }
 
     public async Task AddTextCell()
     {
         Console.WriteLine("AddTextCell");
-        await content.AddCell(NotebookId, "Add text here...", CellType.Text, Position + 1);
+        await content.AddCell(NotebookId ?? "_default_notebook", "Add text here...", CellType.Text, Position + 1);
     }
 }

@@ -5,9 +5,9 @@
 @inject NotebookService content
 
 <div class="cells">
-    @if (cells != null)
+    @if (notebook != null && notebook.Cells != null)
     {
-        <Virtualize Context="cell" Items="@cells">
+        <Virtualize Context="cell" Items="@notebook.Cells">
             @if (cell.Type == CellType.Code)
             {
                 <CodeCell cell="@cell" />
@@ -23,13 +23,23 @@
 
 @code {
     [Parameter]
-    public string NotebookId { get; set; } = "_default_notebook";
-    List<Cell> cells;
+    public string NotebookId { get; set; }
+    Notebook notebook;
     protected override async Task OnInitializedAsync()
     {
-        cells = await content.GetById(NotebookId);
+        if (NotebookId != null)
+        {
+            notebook = await content.GetById(NotebookId);
+        }
+        else
+        {
+            notebook = await content.GetInitialContent();
+        }
 
-        Console.WriteLine(cells);
         content.OnChange += StateHasChanged;
+    }
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Console.WriteLine("Just rendered....");
     }
 }
