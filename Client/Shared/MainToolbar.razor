@@ -17,9 +17,4 @@
         var id = await content.CreateNewNotebook();
         navigation.NavigateTo($"/notebook/{id}");
     }
-
-    private async Task SaveNotebook()
-    {
-        await storage.SetItemAsync("notebook", "foo");
-    }
 }

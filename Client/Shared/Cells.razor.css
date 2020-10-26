@@ -2,6 +2,6 @@
     margin: 0 10px;
 }
 
-div ::deep .cell {
+div ::deep .code-cell {
     border: 1px solid #bfbfbf;
 }
