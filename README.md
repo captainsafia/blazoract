@@ -17,24 +17,18 @@ Before starting development, be sure that you have the following installed:
 $ git clone https://github.com/{yourusername}/blazoract
 ```
 
-1. Restore the project's dependencies by running `dotnet restore` in the root.
+2. Restore the project's dependencies by running `dotnet restore` in the root.
 
-1. Copy the sample configuration file for running Azure functions locally.
-
-```
-$ cp `Api/local.settings.example.json` file into `Api/local.settings.json`
-```
-
-1. Open a terminal and run the following to launch a local instance of the Azure Functions for this app. You will need to the Azure Functions Core Tools mentioned above to enable this.
+3. Open a terminal and run the following to launch a local instance of the Azure Functions for this app. You will need to the Azure Functions Core Tools mentioned above to enable this.
 
 ```
 $ cd Api
 $ func start --build
 ```
 
-1. In another terminal window, run `dotnet run --project Client` to start the client application.
+4. In another terminal window, run `dotnet run --project Client` to start the client application.
 
-1. Navigate to https://localhost:5001 where the contents of the default notebook should load.
+5. Navigate to https://localhost:5001 where the contents of the default notebook should load.
 
 ![Screen Shot 2020-10-25 at 10 03 24 PM](https://user-images.githubusercontent.com/1857993/97135602-f194b300-170d-11eb-87e4-af81bda68ad5.png)
 
