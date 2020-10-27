@@ -35,10 +35,14 @@ namespace blazoract.Server.Controllers
             request.KernelEvents.Subscribe(x =>
             {
                 Console.WriteLine($"Received event: {x}");
-                if (x is DisplayEvent)
+                switch (x)
                 {
-
-                    result.Output = ((DisplayEvent)x).Value;
+                    case DisplayEvent displayEvent:
+                        result.Output = displayEvent.Value;
+                        break;
+                    case CommandFailed commandFailed:
+                        result.CommandFailedMessage = commandFailed.Message;
+                        break;
                 }
             });
             return result;

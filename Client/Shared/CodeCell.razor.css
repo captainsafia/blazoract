@@ -26,19 +26,22 @@ input {
     min-height: 150px;
 }
 
-::deep .editor .margin, ::deep .editor .editor-scrollable {
-    margin-top: 10px;
-} 
-
 .output {
     width: 100%;
     padding: 10px;
     background-color: #eee;
 }
 
+    .output.command-failed {
+        background-color: red;
+        color: white;
+        white-space: pre;
+        font-family: monospace;
+    }
+
 .toolbar {
     flex-grow: 0;
-    padding: 10px;
+    padding: 0 10px;
 }
 
 button {
@@ -46,6 +49,6 @@ button {
     background: white;
 }
 
-button:hover {
-    color: #19b5fe;
-}
+    button:hover {
+        color: #19b5fe;
+    }

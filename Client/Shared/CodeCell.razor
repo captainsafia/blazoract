@@ -11,22 +11,49 @@
     </div>
     <CodeEditor @bind-Code="cell.Content" OnCompletionsRequested="GetCompletionsAsync" />
     <div class="break" />
-    <div class="output">
-        @result.Output
-    </div>
+
+    @* TODO: Create a cleaner system for formatting different kinds of output/status *@
+    @if (isEvaluating)
+    {
+        <div class="output">...</div>
+    }
+    else if (result != null)
+    {
+        if (!string.IsNullOrEmpty(result.CommandFailedMessage))
+        {
+            <div class="output command-failed">@result.CommandFailedMessage</div>
+        }
+        else if (result.Output != null)
+        {
+            <div class="output">@result.Output</div>
+        }
+        else
+        {
+            <div class="output">(No output)</div>
+        }
+    }
 </div>
 
 @code {
     [Parameter]
     public Cell cell { get; set; }
 
-    private ExecuteResult result = new ExecuteResult();
+    private ExecuteResult result;
+    private bool isEvaluating;
 
     private async Task RunCell()
     {
-        var request = new ExecuteRequest(cell.Content);
-        var response = await Http.PostAsJsonAsync("run/evaluatecell", request);
-        result = await response.Content.ReadFromJsonAsync<ExecuteResult>();
+        try
+        {
+            isEvaluating = true;
+            var request = new ExecuteRequest(cell.Content);
+            var response = await Http.PostAsJsonAsync("run/evaluatecell", request);
+            result = await response.Content.ReadFromJsonAsync<ExecuteResult>();
+        }
+        finally
+        {
+            isEvaluating = false;
+        }
     }
 
     private async Task<Suggestion[]> GetCompletionsAsync(string value, Position position)
