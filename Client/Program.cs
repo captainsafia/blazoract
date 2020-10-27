@@ -19,10 +19,15 @@ namespace blazoract.Client
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            // Configure HTTP client to send requests to the local function server
+            Console.WriteLine(builder.Configuration["BaseAddress"]);
+            Console.WriteLine(builder.Configuration);
+            var baseAddress = builder.Configuration["BaseAddress"] ?? builder.HostEnvironment.BaseAddress;
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(baseAddress) });
+
+            // Services for managing local notebook storage
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddScoped<NotebookService>();
-
 
             await builder.Build().RunAsync();
         }
