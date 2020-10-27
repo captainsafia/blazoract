@@ -61,7 +61,7 @@
 
     private async Task<Suggestion[]> GetCompletionsAsync(string value, Position position)
     {
-        var response = await Http.PostAsJsonAsync("run/getcompletions", new GetCompletionsRequest
+        var response = await Http.PostAsJsonAsync("api/code/completions", new GetCompletionsRequest
         {
             Code = value,
             Column = position.Column,
