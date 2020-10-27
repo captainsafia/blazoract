@@ -50,7 +50,7 @@
         {
             isEvaluating = true;
             var request = new ExecuteRequest(cell.Content);
-            var response = await Http.PostAsJsonAsync("run/evaluatecell", request);
+            var response = await Http.PostAsJsonAsync("api/code/run", request);
             result = await response.Content.ReadFromJsonAsync<ExecuteResult>();
         }
         finally
