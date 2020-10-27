@@ -9,7 +9,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.0-rtm.20512.8" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.0-rtm.20512.8" PrivateAssets="all" />
     <PackageReference Include="MonacoRazor" Version="0.1.0-20201027.8" />
-    <PackageReference Include="System.Net.Http.Json" Version="5.0.0-rc.2.20465.7" />
+    <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
