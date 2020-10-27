@@ -38,7 +38,7 @@ namespace blazoract.Server.Controllers
                 switch (x)
                 {
                     case DisplayEvent displayEvent:
-                        result.Output = displayEvent.Value;
+                        result.Output = displayEvent.Value?.ToString();
                         break;
                     case CommandFailed commandFailed:
                         result.CommandFailedMessage = commandFailed.Message;
