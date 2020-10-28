@@ -1,0 +1,26 @@
+﻿<div class="scroller">
+    <table>
+        @foreach (var entry in Data)
+        {
+            <tr>
+                @if (entry is Array row)
+                {
+                    @* 2D array *@
+                    foreach (var cell in row)
+                    {
+                        <td>@cell</td>
+                    }
+                }
+                else
+                {
+                    @* Any other case *@
+                    <td>@entry</td>
+                }
+            </tr>
+        }
+    </table>
+</div>
+
+@code {
+    [Parameter] public Array Data { get; set; }
+}

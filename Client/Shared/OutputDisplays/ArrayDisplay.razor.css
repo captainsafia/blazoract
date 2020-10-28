@@ -1,0 +1,13 @@
+.scroller {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+table {
+    width: 100%;
+}
+
+td {
+    border: 1px solid gray;
+    padding: 4px 8px;
+}
