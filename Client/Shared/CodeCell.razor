@@ -8,7 +8,7 @@
         <div class="toolbar">
             <button @onclick="RunCell">&#x25BA;</button>
         </div>
-        <CodeEditor @bind-Code="cell.Content" OnCompletionsRequested="GetCompletionsAsync" />
+        <CodeEditor @bind-Code="CellContent" OnCompletionsRequested="GetCompletionsAsync" />
     </div>
     <div class="output @ResultCssClass">
         @* TODO: Create a cleaner system for formatting different kinds of output/status *@
@@ -38,11 +38,24 @@
     [Parameter]
     public Cell cell { get; set; }
 
+    [Parameter]
+    public Func<Task> onChange { get; set; }
+
     private ExecuteResult result;
     private bool isEvaluating;
 
     private string ResultCssClass
         => !string.IsNullOrEmpty(result?.CommandFailedMessage) ? "command-failed" : null;
+
+    private string CellContent
+    {
+        get => cell.Content;
+        set
+        {
+            cell.Content = value;
+            onChange();
+        }
+    }
 
     private async Task RunCell()
     {

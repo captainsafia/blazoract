@@ -77,6 +77,11 @@ namespace blazoract.Client.Data
             return notebook;
         }
 
+        public async Task Save(Notebook notebook)
+        {
+            await _storage.SetItemAsync(notebook.NotebookId, notebook);
+        }
+
         public async Task<IEnumerable<Notebook>> GetNotebooks()
         {
             var notebooks = await _storage.GetItemAsync<List<string>>("blazoract-notebooks");
