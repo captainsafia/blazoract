@@ -1,26 +1,26 @@
-﻿<div class="scroller">
+﻿@using System.Collections
+<div class="scroller">
     <table>
-        @foreach (var entry in Data)
-        {
-            <tr>
-                @if (entry is Array row)
-                {
-                    @* 2D array *@
-                    foreach (var cell in row)
+        <tbody>
+            <Virtualize Items="Data" Context="entry">
+                <tr @key="entry">
+                    @if (entry is Array row) // 2D array
                     {
-                        <td>@cell</td>
+                        foreach (var cell in row)
+                        {
+                            <td>@cell</td>
+                        }
                     }
-                }
-                else
-                {
-                    @* Any other case *@
-                    <td>@entry</td>
-                }
-            </tr>
-        }
+                    else // Any other case
+                    {
+                        <td>@entry</td>
+                    }
+                </tr>
+            </Virtualize>
+        </tbody>
     </table>
 </div>
 
 @code {
-    [Parameter] public Array Data { get; set; }
+    [Parameter] public ICollection<object> Data { get; set; }
 }
