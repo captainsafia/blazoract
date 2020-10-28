@@ -21,10 +21,10 @@ namespace blazoract.Api
 {
     public class KernelFunction
     {
-        private CompositeKernel _kernel;
-        public KernelFunction(CompositeKernel kernel)
+        private KernelStore _kernels;
+        public KernelFunction(KernelStore kernels)
         {
-            this._kernel = kernel;
+            _kernels = kernels;
         }
 
         [FunctionName("RunCode")]
@@ -33,9 +33,9 @@ namespace blazoract.Api
             ILogger log)
         {
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            var cell = JsonConvert.DeserializeObject<ExecuteRequest>(requestBody);
-
-            var request = await _kernel.SendAsync(new SubmitCode(cell.Input), new CancellationToken());
+            var executeRequest = JsonConvert.DeserializeObject<ExecuteRequest>(requestBody);
+            var kernel = _kernels.GetKernelForNotebook(executeRequest.NotebookId);
+            var request = await kernel.SendAsync(new SubmitCode(executeRequest.Code), CancellationToken.None);
             var result = new ExecuteResult();
             request.KernelEvents.Subscribe(x =>
             {
@@ -62,7 +62,8 @@ namespace blazoract.Api
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var completionRequest = JsonConvert.DeserializeObject<GetCompletionsRequest>(requestBody);
 
-            var request = await _kernel.SendAsync(new RequestCompletions(completionRequest.Code, new LinePosition(completionRequest.LineNumber - 1, completionRequest.Column - 1)));
+            var kernel = _kernels.GetKernelForNotebook(completionRequest.NotebookId);
+            var request = await kernel.SendAsync(new RequestCompletions(completionRequest.Code, new LinePosition(completionRequest.LineNumber - 1, completionRequest.Column - 1)));
             var result = Array.Empty<Suggestion>();
             request.KernelEvents.Subscribe(x =>
             {
