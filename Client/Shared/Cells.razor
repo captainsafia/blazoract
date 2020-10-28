@@ -4,18 +4,19 @@
 <div class="cells">
     @if (notebook != null && notebook.Cells != null)
     {
-        foreach (var cell in notebook.Cells)
+        for (var index = 0; index < notebook.Cells.Count; index++)
         {
+            var cell = notebook.Cells[index];
             if (cell.Type == CellType.Code)
             {
-                <CodeCell cell="@cell" onChange="SaveNotebook" />
+                <CodeCell Cell="@cell" OnCodeChange="SaveNotebook" />
             }
             else
             {
-                <TextCell cell="@cell" />
+                <TextCell Cell="@cell" />
             }
 
-            <NewCell Position="@cell.Position" NotebookId="@NotebookId" />
+            <NewCell Position="@index" NotebookId="@NotebookId" />
         }
     }
 </div>

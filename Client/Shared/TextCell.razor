@@ -1,7 +1,7 @@
 <div contenteditable="true" class="text-cell">
-    @if (cell != null)
+    @if (Cell != null)
     {
-        @cell.Content
+        @Cell.Content
     } else {
         <p class="placeholder">Enter your text here...</p>
     }
@@ -9,5 +9,5 @@
 
 @code {
     [Parameter]
-    public Cell cell { get; set; }
+    public Cell Cell { get; set; }
 }

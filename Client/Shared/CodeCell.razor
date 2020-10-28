@@ -17,21 +17,21 @@
 
 @code {
     [Parameter]
-    public Cell cell { get; set; }
+    public Cell Cell { get; set; }
 
     [Parameter]
-    public Func<Task> onChange { get; set; }
+    public Func<Task> OnCodeChange { get; set; }
 
     private ExecuteResult result;
     private bool isEvaluating;
 
     private string CellContent
     {
-        get => cell.Content;
+        get => Cell.Content;
         set
         {
-            cell.Content = value;
-            onChange();
+            Cell.Content = value;
+            OnCodeChange();
         }
     }
 
@@ -40,7 +40,7 @@
         try
         {
             isEvaluating = true;
-            var request = new ExecuteRequest(cell.NotebookId, cell.Content);
+            var request = new ExecuteRequest(Cell.NotebookId, Cell.Content);
             var response = await Http.PostAsJsonAsync("api/code/run", request);
             result = await response.Content.ReadFromJsonAsync<ExecuteResult>();
         }
@@ -54,7 +54,7 @@
     {
         var response = await Http.PostAsJsonAsync("api/code/completions", new GetCompletionsRequest
         {
-            NotebookId = cell.NotebookId,
+            NotebookId = Cell.NotebookId,
             Code = value,
             Column = position.Column,
             LineNumber = position.LineNumber

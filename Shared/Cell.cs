@@ -4,11 +4,10 @@ namespace blazoract.Shared
 {
     public class Cell
     {
-        public Cell(string notebookId, string content, int position, CellType type = CellType.Code)
+        public Cell(string notebookId, string content, CellType type = CellType.Code)
         {
             NotebookId = notebookId;
             Content = content;
-            Position = position;
             Type = type;
         }
 
@@ -17,8 +16,6 @@ namespace blazoract.Shared
         public string Content { get; set; }
 
         public CellType Type { get; set; }
-
-        public int Position { get; set; }
     }
 
     public enum CellType

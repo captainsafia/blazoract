@@ -30,7 +30,7 @@ namespace blazoract.Client.Data
             var initialContent = new List<Cell>();
             for (var i = 0; i < 100; i++)
             {
-                initialContent.Add(new Cell(id, $"{i} * {i}", i));
+                initialContent.Add(new Cell(id, $"{i} * {i}"));
             }
             notebook.Cells = initialContent;
             _storage.SetItemAsync("_default_notebook", notebook);
@@ -71,7 +71,7 @@ namespace blazoract.Client.Data
         public async Task<Notebook> AddCell(string id, string content, CellType type, int position)
         {
             var notebook = await GetById(id);
-            notebook.Cells.Insert(position, new Cell(id, content, position, type));
+            notebook.Cells.Insert(position, new Cell(id, content, type));
             await _storage.SetItemAsync(id, notebook);
             OnChange.Invoke();
             return notebook;
