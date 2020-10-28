@@ -34,7 +34,7 @@ namespace blazoract.Api
                 entry.Size = 1;
                 return new CompositeKernel()
                 {
-                    new CSharpKernel().UseDefaultFormatting().UseDotNetVariableSharing()
+                    new CSharpKernel().UseDefaultFormatting().UseDotNetVariableSharing().UseNugetDirective()
                 };
             });
         }
