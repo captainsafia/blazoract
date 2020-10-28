@@ -12,3 +12,8 @@ body {
 #blazor-error-ui {
     display: none;
 }
+
+body .table-hover tbody tr:hover {
+    cursor: pointer;
+    background-color: #fea;
+}
