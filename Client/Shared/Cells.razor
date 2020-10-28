@@ -1,4 +1,5 @@
 @inject NotebookService content
+@implements IDisposable
 
 <div class="cells">
     @if (notebook != null && notebook.Cells != null)
@@ -7,7 +8,7 @@
         {
             if (cell.Type == CellType.Code)
             {
-                <CodeCell cell="@cell" />
+                <CodeCell cell="@cell" onChange="SaveNotebook" />
             }
             else
             {
@@ -28,5 +29,16 @@
     {
         notebook = await content.GetById(NotebookId);
         content.OnChange += StateHasChanged;
+    }
+
+    private async Task SaveNotebook()
+    {
+        notebook = await content.GetById(NotebookId);
+        await content.Save(notebook);
+    }
+
+    void IDisposable.Dispose()
+    {
+        content.OnChange -= StateHasChanged;
     }
 }
