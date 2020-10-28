@@ -4,10 +4,14 @@ namespace blazoract.Shared
 {
     public class ExecuteRequest
     {
-        public ExecuteRequest(string input)
+        public ExecuteRequest(string notebookId, string code)
         {
-            Input = input;
+            NotebookId = notebookId;
+            Code = code;
         }
-        public string Input { get; set; }
+
+        public string NotebookId { get; set; }
+
+        public string Code { get; set; }
     }
 }

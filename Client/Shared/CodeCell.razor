@@ -62,7 +62,7 @@
         try
         {
             isEvaluating = true;
-            var request = new ExecuteRequest(cell.Content);
+            var request = new ExecuteRequest(cell.NotebookId, cell.Content);
             var response = await Http.PostAsJsonAsync("api/code/run", request);
             result = await response.Content.ReadFromJsonAsync<ExecuteResult>();
         }
@@ -76,6 +76,7 @@
     {
         var response = await Http.PostAsJsonAsync("api/code/completions", new GetCompletionsRequest
         {
+            NotebookId = cell.NotebookId,
             Code = value,
             Column = position.Column,
             LineNumber = position.LineNumber
