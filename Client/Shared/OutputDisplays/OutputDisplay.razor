@@ -8,6 +8,9 @@
     {
         switch (_deserializedOutput)
         {
+            case Array array:
+                <ArrayDisplay Data="array" />
+                break;
             default:
                 <FallbackDisplay OutputToString="@Result.OutputToString" />
                 break;
