@@ -9,11 +9,11 @@
             var cell = notebook.Cells[index];
             if (cell.Type == CellType.Code)
             {
-                <CodeCell Cell="@cell" OnCodeChange="SaveNotebook" />
+                <CodeCell @key="@cell" Cell="@cell" OnCodeChange="SaveNotebook" />
             }
             else
             {
-                <TextCell Cell="@cell" />
+                <TextCell @key="@cell" Cell="@cell" />
             }
 
             <NewCell Position="@index" NotebookId="@NotebookId" />

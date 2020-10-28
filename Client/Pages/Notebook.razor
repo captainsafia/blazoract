@@ -1,6 +1,6 @@
 @page "/notebook/{NotebookId}"
 
-<Cells NotebookId="@NotebookId" />
+<Cells @key="@NotebookId" NotebookId="@NotebookId" />
 
 @code {
     [Parameter]
