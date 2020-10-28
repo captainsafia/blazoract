@@ -23,7 +23,7 @@
 
     private object _deserializedOutput;
 
-    protected override void OnParametersSet()
+    protected override void OnInitialized()
     {
         if (Result?.OutputJson != null && Result.OutputType != "error")
         {
@@ -38,7 +38,7 @@
             }
         }
     }
-    
+
     // We create a new instance of this component for each new ExecuteResult,
     // so there's no need for existing instances to re-render
     protected override bool ShouldRender()
