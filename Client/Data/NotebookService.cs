@@ -80,7 +80,11 @@ namespace blazoract.Client.Data
         public async Task<IEnumerable<Notebook>> GetNotebooks()
         {
             var notebooks = await _storage.GetItemAsync<List<string>>("blazoract-notebooks");
-            return await Task.WhenAll(notebooks.Select(async notebookId => await GetById(notebookId)));
+            if (notebooks != null)
+            {
+                return await Task.WhenAll(notebooks.Select(async notebookId => await GetById(notebookId)));
+            }
+            return new List<Notebook>();
         }
     }
 }
