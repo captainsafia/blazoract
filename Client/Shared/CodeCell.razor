@@ -10,27 +10,8 @@
         </div>
         <CodeEditor @bind-Code="CellContent" OnCompletionsRequested="GetCompletionsAsync" />
     </div>
-    <div class="output @ResultCssClass">
-        @* TODO: Create a cleaner system for formatting different kinds of output/status *@
-        @if (isEvaluating)
-        {
-            <text>...</text>
-        }
-        else if (result != null)
-        {
-            if (!string.IsNullOrEmpty(result.CommandFailedMessage))
-            {
-                @result.CommandFailedMessage
-            }
-            else if (result.Output != null)
-            {
-                @result.Output
-            }
-            else
-            {
-                <text>(No output)</text>
-            }
-        }
+    <div class="output @(isEvaluating ? "loading" : "")">
+        <OutputDisplay @key="result" Result="result" />
     </div>
 </div>
 
@@ -43,9 +24,6 @@
 
     private ExecuteResult result;
     private bool isEvaluating;
-
-    private string ResultCssClass
-        => !string.IsNullOrEmpty(result?.CommandFailedMessage) ? "command-failed" : null;
 
     private string CellContent
     {

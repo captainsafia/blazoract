@@ -1,0 +1,43 @@
+﻿@if (Result != null)
+{
+    if (Result.OutputType == "error")
+    {
+        <ErrorDisplay Result="Result" />
+    }
+    else
+    {
+        switch (_deserializedOutput)
+        {
+            default:
+                <FallbackDisplay OutputToString="@Result.OutputToString" />
+                break;
+        }
+    }
+}
+
+@code {
+    [Parameter] public ExecuteResult Result { get; set; }
+
+    private object _deserializedOutput;
+
+    protected override void OnParametersSet()
+    {
+        if (Result?.OutputJson != null && Result.OutputType != "error")
+        {
+            try
+            {
+                var type = Type.GetType(Result.OutputType);
+                _deserializedOutput = System.Text.Json.JsonSerializer.Deserialize(Result.OutputJson, type);
+            }
+            catch
+            {
+                // If we can't deserialize it, we'll just use the string fallback
+            }
+        }
+    }
+    
+    // We create a new instance of this component for each new ExecuteResult,
+    // so there's no need for existing instances to re-render
+    protected override bool ShouldRender()
+        => false;
+}

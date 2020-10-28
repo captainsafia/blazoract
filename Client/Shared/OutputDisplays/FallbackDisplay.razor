@@ -1,0 +1,16 @@
+﻿@switch (OutputToString)
+{
+    case null:
+        <div>(no output)</div>
+        break;
+    case "":
+        <div>(empty string)</div>
+        break;
+    default:
+        <div>@OutputToString</div>
+        break;
+}
+
+@code {
+    [Parameter] public string OutputToString { get; set; }
+}

@@ -43,10 +43,22 @@ namespace blazoract.Api
                 switch (x)
                 {
                     case DisplayEvent displayEvent:
-                        result.Output = displayEvent.Value?.ToString();
+                        var value = displayEvent.Value;
+                        result.OutputType = value?.GetType().AssemblyQualifiedName;
+                        result.OutputToString = value?.ToString();
+                        try
+                        {
+                            result.OutputJson = System.Text.Json.JsonSerializer.Serialize(value);
+                        }
+                        catch
+                        {
+                            // If it's not serializable, the client will just use OutputToString
+                        }
                         break;
                     case CommandFailed commandFailed:
-                        result.CommandFailedMessage = commandFailed.Message;
+                        result.OutputType = "error";
+                        result.OutputJson = null;
+                        result.OutputToString = commandFailed.Message;
                         break;
                 }
             });
