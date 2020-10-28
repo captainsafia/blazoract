@@ -1,4 +1,7 @@
-﻿<Router AppAssembly="@typeof(Program).Assembly">
+﻿@using Microsoft.AspNetCore.Components.WebAssembly.Services
+@inject LazyAssemblyLoader assemblyLoader
+
+<Router AppAssembly="@typeof(Program).Assembly" OnNavigateAsync="@OnNavigateAsync">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(Page)" />
     </Found>
@@ -8,3 +11,21 @@
         </LayoutView>
     </NotFound>
 </Router>
+@code {
+    private async Task OnNavigateAsync(NavigationContext args)
+    {
+        try
+        {
+            if (args.Path.EndsWith("notebooks"))
+            {
+                await assemblyLoader.LoadAssembliesAsync(
+                    new List<string>() { "BlazorTable.dll" }
+                );
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+}

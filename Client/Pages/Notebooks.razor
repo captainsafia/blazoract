@@ -1,3 +1,21 @@
 @page "/notebooks"
 
-<h1>TBD</h1>
+@using BlazorTable
+
+@inject NotebookService content
+
+<Table TableItem="blazoract.Shared.Notebook" Items="notebooks">
+    <Column TableItem="blazoract.Shared.Notebook" Title="Title" Field="@(x => x.Title)" Sortable="true"
+    Filterable="true" Width="50%" />
+    <Column TableItem="blazoract.Shared.Notebook" Title="Id" Field="@(x => x.NotebookId)" Sortable="true"
+    Filterable="true" Width="50%" />
+</Table>
+
+@code {
+    private IEnumerable<blazoract.Shared.Notebook> notebooks;
+        
+    protected override async Task OnInitializedAsync()
+    {
+        notebooks = await content.GetNotebooks();
+    }
+}

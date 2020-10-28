@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Linq;
 
 namespace blazoract.Client.Data
 {
@@ -34,6 +35,7 @@ namespace blazoract.Client.Data
             notebook.Cells = initialContent;
             _storage.SetItemAsync("_default_notebook", notebook);
         }
+
         public async Task<Notebook> GetInitialContent()
         {
             return await _http.GetFromJsonAsync<Notebook>("/data/default-notebook.json");
@@ -54,9 +56,14 @@ namespace blazoract.Client.Data
         {
             var id = Guid.NewGuid().ToString("N");
             var title = "New notebook";
-            var notebook = new Notebook(id, title);
+            var notebook = new Notebook(title, id);
             notebook.Cells = new List<Cell>() { new Cell("", 0) };
             await _storage.SetItemAsync(id, notebook);
+
+            var notebooks = await _storage.GetItemAsync<List<string>>("blazoract-notebooks") ?? new List<string>();
+            notebooks.Add(id);
+            await _storage.SetItemAsync("blazoract-notebooks", notebooks);
+
             _inMemoryNotebooks[id] = notebook;
             return id;
         }
@@ -70,5 +77,10 @@ namespace blazoract.Client.Data
             return notebook;
         }
 
+        public async Task<IEnumerable<Notebook>> GetNotebooks()
+        {
+            var notebooks = await _storage.GetItemAsync<List<string>>("blazoract-notebooks");
+            return await Task.WhenAll(notebooks.Select(async notebookId => await GetById(notebookId)));
+        }
     }
 }
