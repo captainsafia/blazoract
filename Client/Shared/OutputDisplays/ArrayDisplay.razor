@@ -1,23 +1,20 @@
-﻿@using System.Collections
-<div class="scroller">
+﻿<div class="scroller">
     <table>
-        <tbody>
-            <Virtualize Items="Data" Context="entry">
-                <tr @key="entry">
-                    @if (entry is Array row) // 2D array
+        <Virtualize Items="Data" Context="entry">
+            <tr @key="entry">
+                @if (entry is Array row) // 2D array
+                {
+                    foreach (var cell in row)
                     {
-                        foreach (var cell in row)
-                        {
-                            <td>@cell</td>
-                        }
+                        <td>@cell</td>
                     }
-                    else // Any other case
-                    {
-                        <td>@entry</td>
-                    }
-                </tr>
-            </Virtualize>
-        </tbody>
+                }
+                else // Any other case
+                {
+                    <td>@entry</td>
+                }
+            </tr>
+        </Virtualize>
     </table>
 </div>
 
