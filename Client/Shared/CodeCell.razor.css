@@ -23,16 +23,30 @@ input {
 }
 
 .output {
-    padding: 10px;
     background-color: #eee;
+    min-height: 20px;
+    transition: filter 0.5s ease-in-out;
+}
+    .output > ::deep div {
+        padding: 10px;
+        animation-name: yellowfade;
+        animation-duration: 1s;
+        background-color: var(--bgcol);
+    }
+
+@keyframes yellowfade {
+    from {
+        background-color: #f5ea7f;
+    }
+
+    to {
+        background-color: var(--bgcol);
+    }
 }
 
-    .output.command-failed {
-        background-color: red;
-        color: white;
-        white-space: pre;
-        font-family: monospace;
-    }
+.loading {
+    filter: brightness(0.5);
+}
 
 .toolbar {
     flex-grow: 0;

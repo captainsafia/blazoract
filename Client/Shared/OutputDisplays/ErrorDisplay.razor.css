@@ -1,0 +1,6 @@
+.error {
+    color: white;
+    white-space: pre;
+    font-family: monospace;
+    --bgcol: red;
+}
