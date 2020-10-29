@@ -2,19 +2,19 @@
 {
     if (Result.OutputType == "error")
     {
-        <ErrorDisplay Result="Result" />
+        <ErrorDisplay Result="Result"></ErrorDisplay>
     }
     else if (_deserializedOutput is ICollection<object> objectCollection)
     {
-        <ArrayDisplay Data="@objectCollection" />
+        <ArrayDisplay Data="@objectCollection"></ArrayDisplay>
     }
     else if (_deserializedOutput is IEnumerable enumerable)
     {
-        <ArrayDisplay Data="@(enumerable.Cast<object>().ToList())" />
+        <ArrayDisplay Data="@(enumerable.Cast<object>().ToList())"></ArrayDisplay>
     }
     else
     {
-        <FallbackDisplay OutputToString="@Result.OutputToString" />
+        <FallbackDisplay OutputToString="@Result.OutputToString"></FallbackDisplay>
     }
 }
 

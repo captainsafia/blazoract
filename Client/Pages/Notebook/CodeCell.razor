@@ -1,0 +1,65 @@
+﻿@using System.Net.Http
+@using MonacoRazor
+
+@inject HttpClient Http
+
+<div class="code-cell">
+    <div class="top">
+        <div class="toolbar">
+            <button @onclick="RunCell">&#x25BA;</button>
+        </div>
+        <CodeEditor @bind-Code="CellContent" OnCompletionsRequested="GetCompletionsAsync" />
+    </div>
+    <div class="output @(isEvaluating ? "loading" : "")">
+        <OutputDisplay @key="result" Result="result" />
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Cell Cell { get; set; }
+
+    [Parameter]
+    public Func<Task> OnCodeChange { get; set; }
+
+    private ExecuteResult result;
+    private bool isEvaluating;
+
+    private string CellContent
+    {
+        get => Cell.Content;
+        set
+        {
+            Cell.Content = value;
+            OnCodeChange();
+        }
+    }
+
+    private async Task RunCell()
+    {
+        try
+        {
+            isEvaluating = true;
+            var request = new ExecuteRequest(Cell.NotebookId, Cell.Content);
+            var response = await Http.PostAsJsonAsync("api/code/run", request);
+            result = await response.Content.ReadFromJsonAsync<ExecuteResult>();
+        }
+        finally
+        {
+            isEvaluating = false;
+        }
+    }
+
+    private async Task<Suggestion[]> GetCompletionsAsync(string value, Position position)
+    {
+        var response = await Http.PostAsJsonAsync("api/code/completions", new GetCompletionsRequest
+        {
+            NotebookId = Cell.NotebookId,
+            Code = value,
+            Column = position.Column,
+            LineNumber = position.LineNumber
+        });
+
+        return await response.Content.ReadFromJsonAsync<Suggestion[]>();
+    }
+}
