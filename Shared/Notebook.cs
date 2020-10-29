@@ -5,10 +5,10 @@ namespace blazoract.Shared
 {
     public class Notebook
     {
-        public Notebook(string title, string notebookId)
+        public Notebook(string title)
         {
             Title = title;
-            NotebookId = notebookId;
+            NotebookId = Guid.NewGuid().ToString("N");
             Created = DateTime.Now;
             Updated = Created;
         }

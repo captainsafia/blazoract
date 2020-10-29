@@ -36,7 +36,7 @@
         if (notebookId != null)
         {
             var notebook = await content.GetById(notebookId);
-            content.Save(notebook);
+            await content.Save(notebook);
         }
         }
     private void GoToNotebooks()

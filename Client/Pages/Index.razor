@@ -1,3 +1,12 @@
 @page "/"
 
-<Cells NotebookId="_default_notebook" />
+@inject NavigationManager navigation
+@inject NotebookService content
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var id = await content.CreateNewNotebook();
+        navigation.NavigateTo($"/notebook/{id}");
+    }
+}
