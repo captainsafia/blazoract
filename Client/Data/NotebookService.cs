@@ -79,6 +79,7 @@ namespace blazoract.Client.Data
 
         public async Task Save(Notebook notebook)
         {
+            notebook.Updated = DateTime.Now;
             await _storage.SetItemAsync(notebook.NotebookId, notebook);
         }
 
