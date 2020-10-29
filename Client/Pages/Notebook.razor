@@ -1,0 +1,11 @@
+@page "/notebook/{NotebookId}"
+
+<div class="page">
+    <MainToolbar NotebookId="@NotebookId" />
+    <Cells @key="@NotebookId" NotebookId="@NotebookId" />
+</div>
+
+@code {
+    [Parameter]
+    public string NotebookId { get; set; }
+}
