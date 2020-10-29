@@ -3,7 +3,9 @@
 
 <Router AppAssembly="@typeof(Program).Assembly" OnNavigateAsync="@OnNavigateAsync">
     <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(Page)" />
+        <CascadingValue Value="@routeData">
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(Page)" />
+        </CascadingValue>
     </Found>
     <NotFound>
         <LayoutView Layout="@typeof(Page)">
