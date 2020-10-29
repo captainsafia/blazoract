@@ -1,7 +1,10 @@
 @page "/"
 @page "/notebook/{Id}"
 
-<Cells @key="@NotebookId" NotebookId="@NotebookId" />
+<div class="page">
+    <MainToolbar />
+    <Cells @key="@NotebookId" NotebookId="@NotebookId" />
+</div>
 
 @code {
     [Parameter]
