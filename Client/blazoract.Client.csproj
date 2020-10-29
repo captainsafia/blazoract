@@ -20,4 +20,10 @@
     <BlazorWebAssemblyLazyLoad Include="BlazorTable.dll" />
   </ItemGroup>
 
+  <Target Name="WatchScopedCss" BeforeTargets="GenerateWatchList">
+    <ItemGroup>
+      <Watch Include="**\*.razor.css" />
+    </ItemGroup>
+  </Target>
+
 </Project>
