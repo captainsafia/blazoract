@@ -8,6 +8,7 @@
     <div class="info">
         <h1>Welcome!</h1>
         <p>To get started, create a new notebook or <a href="notebooks">see your existing notebooks.</a></p>
+
         <button @onclick="CreateNewNotebook">Create a new notebook ▸</button>
     </div>
 </div>
@@ -15,7 +16,7 @@
 @code {
     private async Task CreateNewNotebook()
     {
-        var newNotebook = await content.CreateNewNotebook();
+        var newNotebook = await content.CreateNewNotebook(addSample: true);
         navigation.NavigateTo($"/notebook/{newNotebook.NotebookId}");
     }
 }
