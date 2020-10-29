@@ -3,7 +3,10 @@
 
 <div class="main-toolbar">
     <h2>blazoract</h2>
-    <NotebookName />
+    @if (!string.IsNullOrEmpty(notebookId))
+    {
+        <NotebookName />
+    }
     <div class="right">
         <a @onclick="NewNotebook">New</a>
         <a>Save</a>
@@ -11,6 +14,18 @@
     </div>
 </div>
 @code {
+    [CascadingParameter]
+    RouteData RouteData { get; set; }
+
+    private string notebookId;
+
+    protected override void OnParametersSet()
+    {
+        if (RouteData.RouteValues.TryGetValue("NotebookId", out var _notebookId))
+        {
+            notebookId = _notebookId.ToString();
+        }
+    }
     private async Task NewNotebook()
     {
         var id = await content.CreateNewNotebook();
