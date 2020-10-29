@@ -1,6 +1,6 @@
-const registerListener = (element) => {
+const registerListener = (element, component) => {
     element.addEventListener("input", function (event) {
-        DotNet.invokeMethodAsync("blazoract.Client", "RenameNotebook", element.innerText)
+        component.invokeMethodAsync('RenameNotebook', element.innerText);
     });
 };
 
