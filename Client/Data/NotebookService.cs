@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using blazoract.Shared;
 using Blazored.LocalStorage;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -17,7 +16,7 @@ namespace blazoract.Client.Data
         private ILocalStorageService _storage;
         private HttpClient _http;
 
-        private Dictionary<string, Notebook> _inMemoryNotebooks = new Dictionary<string, Notebook>();
+        private Dictionary<string, Task<Notebook>> _inMemoryNotebooks = new Dictionary<string, Task<Notebook>>();
 
         public NotebookService(ILocalStorageService storage, HttpClient http)
         {
@@ -30,24 +29,42 @@ namespace blazoract.Client.Data
             return await _http.GetFromJsonAsync<Notebook>("/data/default-notebook.json");
         }
 
-        public async Task<Notebook> GetById(string id)
+        public Task<Notebook> GetById(string id)
         {
+
             if (!_inMemoryNotebooks.TryGetValue(id, out var result))
             {
-                result = await _storage.GetItemAsync<Notebook>(id);
+                result = _storage.GetItemAsync<Notebook>(id).AsTask();
                 _inMemoryNotebooks[id] = result;
+            }
+            else
+            {
             }
 
             return result;
         }
 
-        public async Task<Notebook> CreateNewNotebook()
+        public async Task<Notebook> CreateNewNotebook(bool addSample = false)
         {
             var id = Guid.NewGuid().ToString("N");
             var notebook = new Notebook("New notebook", id);
-            notebook.Cells = new List<Cell>() { new Cell(id, "// Type your code here", 0) };
+            notebook.Cells = new List<Cell>();
+
+            if (addSample)
+            {
+                notebook.Cells.Add(new Cell(id, @"int Fibonacci(int n)
+{
+    return n < 2 ? 1 : Fibonacci(n-1) + Fibonacci(n-2);
+}", 0));
+                notebook.Cells.Add(new Cell(id, @"Enumerable.Range(1, 10).Select(Fibonacci).ToArray()", 0));
+            }
+            else
+            {
+                notebook.Cells.Add(new Cell(id, "// Type your code here", 0));
+            }
 
             await _storage.SetItemAsync(id, notebook);
+            _inMemoryNotebooks[id] = Task.FromResult(notebook);
 
             var notebooks = await _storage.GetItemAsync<List<string>>("blazoract-notebooks") ?? new List<string>();
             notebooks.Add(id);
