@@ -2,7 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding: 0.5em;
+    padding: 0.5em 1.2em;
     background-color: #e8e8e8;
     align-items: center;
 }
@@ -27,4 +27,8 @@ button:hover {
     background-color: #19b5fe;
     color: white;
     font-weight: bold;
+}
+
+a {
+    color: #19b5fe;
 }

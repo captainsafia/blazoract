@@ -1,14 +1,21 @@
 @page "/"
-@page "/notebook/{Id}"
+@inject NotebookService content
+@inject NavigationManager navigation
 
 <div class="page">
-    <MainToolbar NotebookId="@NotebookId" />
-    <Cells @key="@NotebookId" NotebookId="@NotebookId" />
+    <MainToolbar />
+    
+    <div class="info">
+        <h1>Welcome!</h1>
+        <p>To get started, create a new notebook or see your existing notebooks.</p>
+        <button @onclick="CreateNewNotebook">Create a new notebook ▸</button>
+    </div>
 </div>
 
 @code {
-    [Parameter]
-    public string Id { get; set; }
-
-    public string NotebookId => Id ?? "_default_notebook";
+    private async Task CreateNewNotebook()
+    {
+        var newNotebook = await content.CreateNewNotebook();
+        navigation.NavigateTo($"/notebook/{newNotebook.NotebookId}");
+    }
 }
