@@ -9,7 +9,7 @@
     }
     <div class="right">
         <a @onclick="NewNotebook">New</a>
-        <a>Save</a>
+        <a @onclick="SaveNotebook">Save</a>
         <a href="/notebooks">View All</a>
     </div>
 </div>
@@ -30,5 +30,13 @@
     {
         var id = await content.CreateNewNotebook();
         navigation.NavigateTo($"/notebook/{id}");
+    }
+    private async Task SaveNotebook()
+    {
+        if (notebookId != null)
+        {
+            var notebook = await content.GetById(notebookId);
+            content.Save(notebook);
+        }
     }
 }
