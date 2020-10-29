@@ -12,6 +12,8 @@ namespace blazoract.Client.Data
 {
     public class NotebookService
     {
+        public const string DefaultNotebookId = "_default_notebook";
+
         public event Action OnChange;
 
         private ILocalStorageService _storage;
@@ -23,17 +25,6 @@ namespace blazoract.Client.Data
         {
             _storage = storage;
             _http = http;
-
-            var id = Guid.NewGuid().ToString("N");
-            var title = "Default Notebook";
-            var notebook = new Notebook(id, title);
-            var initialContent = new List<Cell>();
-            for (var i = 0; i < 100; i++)
-            {
-                initialContent.Add(new Cell(id, $"{i} * {i}"));
-            }
-            notebook.Cells = initialContent;
-            _storage.SetItemAsync("_default_notebook", notebook);
         }
 
         public async Task<Notebook> GetInitialContent()
@@ -46,26 +37,43 @@ namespace blazoract.Client.Data
             if (!_inMemoryNotebooks.TryGetValue(id, out var result))
             {
                 result = await _storage.GetItemAsync<Notebook>(id);
+
+                if (result == null && id == DefaultNotebookId)
+                {
+                    result = await CreateNewNotebook(defaultNotebook: true);
+                }
+
                 _inMemoryNotebooks[id] = result;
             }
 
             return result;
         }
 
-        public async Task<string> CreateNewNotebook()
+        public async Task<Notebook> CreateNewNotebook(bool defaultNotebook = false)
         {
-            var id = Guid.NewGuid().ToString("N");
-            var title = "New notebook";
-            var notebook = new Notebook(title, id);
-            notebook.Cells = new List<Cell>() { new Cell(id, "// Type your code here", 0) };
+            var id = defaultNotebook ? DefaultNotebookId : Guid.NewGuid().ToString("N");
+            var notebook = new Notebook("New notebook", id);
+
+            if (!defaultNotebook)
+            {
+                notebook.Cells = new List<Cell>() { new Cell(id, "// Type your code here", 0) };
+            }
+            else
+            {
+                notebook.Cells = new List<Cell>();
+                for (var i = 0; i < 100; i++)
+                {
+                    notebook.Cells.Add(new Cell(id, $"{i} * {i}"));
+                }
+            }
+
             await _storage.SetItemAsync(id, notebook);
 
             var notebooks = await _storage.GetItemAsync<List<string>>("blazoract-notebooks") ?? new List<string>();
             notebooks.Add(id);
             await _storage.SetItemAsync("blazoract-notebooks", notebooks);
 
-            _inMemoryNotebooks[id] = notebook;
-            return id;
+            return notebook;
         }
 
         public async Task<Notebook> AddCell(string id, string content, CellType type, int position)

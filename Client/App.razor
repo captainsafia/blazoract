@@ -3,9 +3,7 @@
 
 <Router AppAssembly="@typeof(Program).Assembly" OnNavigateAsync="@OnNavigateAsync">
     <Found Context="routeData">
-        <CascadingValue Value="@routeData">
-            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-        </CascadingValue>
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
     </Found>
     <NotFound>
         <LayoutView Layout="@typeof(MainLayout)">
@@ -17,18 +15,11 @@
 @code {
     private async Task OnNavigateAsync(NavigationContext args)
     {
-        try
+        if (args.Path.EndsWith("notebooks"))
         {
-            if (args.Path.EndsWith("notebooks"))
-            {
-                await assemblyLoader.LoadAssembliesAsync(
-                    new List<string>() { "BlazorTable.dll" }
-                );
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex);
+            await assemblyLoader.LoadAssembliesAsync(
+                new List<string>() { "BlazorTable.dll" }
+            );
         }
     }
 }

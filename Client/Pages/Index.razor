@@ -2,7 +2,7 @@
 @page "/notebook/{Id}"
 
 <div class="page">
-    <MainToolbar />
+    <MainToolbar NotebookId="@NotebookId" />
     <Cells @key="@NotebookId" NotebookId="@NotebookId" />
 </div>
 

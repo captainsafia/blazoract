@@ -1,50 +1,48 @@
 @inject IJSRuntime JSRuntime
 @inject NotebookService content
+@implements IAsyncDisposable
 
-<div class="notebook-name" contenteditable="true" @ref=nameDiv>
-    @if (notebook != null)
-    {
-        @notebook.Title
-    } else {
-        @name
-    }
+<div class="notebook-name" contenteditable="true" @ref="nameDiv">
+    @notebook?.Title
 </div>
 
 @code {
     [Parameter]
     public string NotebookId { get; set; }
-    private string name = "New notebook";
 
     private Notebook notebook;
-    ElementReference nameDiv;
+    private ElementReference nameDiv;
+    private IJSObjectReference module;
+    private DotNetObjectReference<NotebookName> thisReference;
 
-    IJSObjectReference module;
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        module = await JSRuntime.InvokeAsync<IJSObjectReference>("import",
-            "./js/notebook-name.js");
+        notebook = null;
         notebook = await content.GetById(NotebookId);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (module != null)
+        if (firstRender)
         {
-            var component = DotNetObjectReference.Create(this);
-            await module.InvokeAsync<string>("registerListener", nameDiv, component);
+            module = await JSRuntime.InvokeAsync<IJSObjectReference>(
+                "import", "./js/notebook-name.js");
+
+            thisReference = DotNetObjectReference.Create(this);
+            await module.InvokeAsync<string>("registerListener", nameDiv, thisReference);
         }
     }
 
-    [JSInvokable("RenameNotebook")]
-    public async Task<bool> RenameNotebook(string newName)
+    [JSInvokable]
+    public async Task RenameNotebook(string newName)
     {
-        if (notebook != null)
-        {
-            notebook.Title = newName;
-            await content.Save(notebook);
-            return true;
-        }
-        return false;
+        notebook.Title = newName;
+        await content.Save(notebook);
     }
 
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        thisReference.Dispose();
+        await module.DisposeAsync();
+    }
 }

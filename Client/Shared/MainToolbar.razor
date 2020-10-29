@@ -3,9 +3,9 @@
 
 <div class="main-toolbar">
     <h2>blazoract</h2>
-    @if (!string.IsNullOrEmpty(notebookId))
+    @if (!string.IsNullOrEmpty(NotebookId))
     {
-        <NotebookName NotebookId="@notebookId" />
+        <NotebookName NotebookId="@NotebookId" />
     }
     <div class="right">
         <button @onclick="NewNotebook">New</button>
@@ -15,30 +15,19 @@
 </div>
 
 @code {
-    [CascadingParameter]
-    RouteData RouteData { get; set; }
-
-    private string notebookId;
-
-    protected override void OnParametersSet()
-    {
-        if (RouteData.RouteValues.TryGetValue("NotebookId", out var _notebookId))
-        {
-            notebookId = _notebookId.ToString();
-        }
-    }
+    [Parameter] public string NotebookId { get; set; }
 
     private async Task NewNotebook()
     {
-        var id = await content.CreateNewNotebook();
-        navigation.NavigateTo($"/notebook/{id}");
+        var newNotebook = await content.CreateNewNotebook();
+        navigation.NavigateTo($"/notebook/{newNotebook.NotebookId}");
     }
 
     private async Task SaveNotebook()
     {
-        if (notebookId != null)
+        if (NotebookId != null)
         {
-            var notebook = await content.GetById(notebookId);
+            var notebook = await content.GetById(NotebookId);
             await content.Save(notebook);
         }
     }
