@@ -55,7 +55,9 @@ namespace blazoract.Client.Data
                 notebook.Cells.Add(new Cell(id, @"int Fibonacci(int n)
 {
     return n < 2 ? 1 : Fibonacci(n-1) + Fibonacci(n-2);
-}", 0));
+}
+
+Fibonacci(5)", 0));
                 notebook.Cells.Add(new Cell(id, @"Enumerable.Range(1, 10).Select(Fibonacci).ToArray()", 0));
             }
             else
