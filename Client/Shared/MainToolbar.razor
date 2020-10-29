@@ -13,6 +13,7 @@
         <button @onclick="GoToNotebooks">View All</button>
     </div>
 </div>
+
 @code {
     [CascadingParameter]
     RouteData RouteData { get; set; }
@@ -26,21 +27,24 @@
             notebookId = _notebookId.ToString();
         }
     }
+
     private async Task NewNotebook()
     {
         var id = await content.CreateNewNotebook();
         navigation.NavigateTo($"/notebook/{id}");
     }
+
     private async Task SaveNotebook()
     {
         if (notebookId != null)
         {
             var notebook = await content.GetById(notebookId);
-            content.Save(notebook);
+            await content.Save(notebook);
         }
-        }
+    }
+
     private void GoToNotebooks()
     {
         navigation.NavigateTo("/notebooks");
     }
-            }
+}
