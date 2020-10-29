@@ -13,6 +13,12 @@ body {
     display: none;
 }
 
+.page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
 body .table-hover tbody tr:hover {
     cursor: pointer;
     background-color: #fea;
