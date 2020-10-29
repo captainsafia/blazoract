@@ -8,9 +8,9 @@
         <NotebookName NotebookId="@notebookId" />
     }
     <div class="right">
-        <a @onclick="NewNotebook">New</a>
-        <a @onclick="SaveNotebook">Save</a>
-        <a href="/notebooks">View All</a>
+        <button @onclick="NewNotebook">New</button>
+        <button @onclick="SaveNotebook">Save</button>
+        <button @onclick="GoToNotebooks">View All</button>
     </div>
 </div>
 @code {
@@ -38,5 +38,9 @@
             var notebook = await content.GetById(notebookId);
             content.Save(notebook);
         }
+        }
+    private void GoToNotebooks()
+    {
+        navigation.NavigateTo("/notebooks");
     }
-}
+            }

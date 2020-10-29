@@ -15,14 +15,16 @@ h2 {
     float: right;
 }
 
-a {
-    color: #bfbfbf;
+button {
+    background: #bfbfbf;
+    border: none;
     text-decoration: none;
     color: black;
     padding: 0 12px;
 }
 
-a:hover {
-    color: #19b5fe;
+button:hover {
+    background-color: #19b5fe;
+    color: white;
     font-weight: bold;
 }
