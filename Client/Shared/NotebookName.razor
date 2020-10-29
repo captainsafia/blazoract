@@ -1,13 +1,21 @@
 @inject IJSRuntime JSRuntime
-@inject ILocalStorageService storage
+@inject NotebookService content
 
 <div class="notebook-name" contenteditable="true" @ref=nameDiv>
-    @name
+    @if (notebook != null)
+    {
+        @notebook.Title
+    } else {
+        @name
+    }
 </div>
 
 @code {
+    [Parameter]
+    public string NotebookId { get; set; }
     private string name = "New notebook";
 
+    private Notebook notebook;
     ElementReference nameDiv;
 
     IJSObjectReference module;
@@ -15,21 +23,28 @@
     {
         module = await JSRuntime.InvokeAsync<IJSObjectReference>("import",
             "./js/notebook-name.js");
+        notebook = await content.GetById(NotebookId);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (module != null)
         {
-            await module.InvokeAsync<string>("registerListener", nameDiv);
+            var component = DotNetObjectReference.Create(this);
+            await module.InvokeAsync<string>("registerListener", nameDiv, component);
         }
     }
 
     [JSInvokable("RenameNotebook")]
-    public static async Task<string> RenameNotebook(string newName)
+    public async Task<bool> RenameNotebook(string newName)
     {
-
-        return await Task.FromResult("true");
+        if (notebook != null)
+        {
+            notebook.Title = newName;
+            await content.Save(notebook);
+            return true;
+        }
+        return false;
     }
 
 }

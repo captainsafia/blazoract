@@ -5,7 +5,7 @@
     <h2>blazoract</h2>
     @if (!string.IsNullOrEmpty(notebookId))
     {
-        <NotebookName />
+        <NotebookName NotebookId="@notebookId" />
     }
     <div class="right">
         <a @onclick="NewNotebook">New</a>
