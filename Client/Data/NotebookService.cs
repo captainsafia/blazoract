@@ -12,8 +12,6 @@ namespace blazoract.Client.Data
 {
     public class NotebookService
     {
-        public const string DefaultNotebookId = "_default_notebook";
-
         public event Action OnChange;
 
         private ILocalStorageService _storage;
@@ -37,35 +35,17 @@ namespace blazoract.Client.Data
             if (!_inMemoryNotebooks.TryGetValue(id, out var result))
             {
                 result = await _storage.GetItemAsync<Notebook>(id);
-
-                if (result == null && id == DefaultNotebookId)
-                {
-                    result = await CreateNewNotebook(defaultNotebook: true);
-                }
-
                 _inMemoryNotebooks[id] = result;
             }
 
             return result;
         }
 
-        public async Task<Notebook> CreateNewNotebook(bool defaultNotebook = false)
+        public async Task<Notebook> CreateNewNotebook()
         {
-            var id = defaultNotebook ? DefaultNotebookId : Guid.NewGuid().ToString("N");
+            var id = Guid.NewGuid().ToString("N");
             var notebook = new Notebook("New notebook", id);
-
-            if (!defaultNotebook)
-            {
-                notebook.Cells = new List<Cell>() { new Cell(id, "// Type your code here", 0) };
-            }
-            else
-            {
-                notebook.Cells = new List<Cell>();
-                for (var i = 0; i < 100; i++)
-                {
-                    notebook.Cells.Add(new Cell(id, $"{i} * {i}"));
-                }
-            }
+            notebook.Cells = new List<Cell>() { new Cell(id, "// Type your code here", 0) };
 
             await _storage.SetItemAsync(id, notebook);
 
