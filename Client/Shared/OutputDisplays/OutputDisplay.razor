@@ -4,17 +4,17 @@
     {
         <ErrorDisplay Result="Result" />
     }
+    else if (_deserializedOutput is ICollection<object> objectCollection)
+    {
+        <ArrayDisplay Data="@objectCollection" />
+    }
+    else if (_deserializedOutput is IEnumerable enumerable)
+    {
+        <ArrayDisplay Data="@(enumerable.Cast<object>().ToList())" />
+    }
     else
     {
-        switch (_deserializedOutput)
-        {
-            case ICollection<object> array:
-                <ArrayDisplay Data="array" />
-                break;
-            default:
-                <FallbackDisplay OutputToString="@Result.OutputToString" />
-                break;
-        }
+        <FallbackDisplay OutputToString="@Result.OutputToString" />
     }
 }
 
