@@ -1,3 +1,11 @@
 @page "/"
+@page "/notebook/{Id}"
 
-<Cells NotebookId="_default_notebook" />
+<Cells @key="@NotebookId" NotebookId="@NotebookId" />
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    public string NotebookId => Id ?? "_default_notebook";
+}

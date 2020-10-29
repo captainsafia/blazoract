@@ -1,8 +1,0 @@
-@page "/notebook/{NotebookId}"
-
-<Cells @key="@NotebookId" NotebookId="@NotebookId" />
-
-@code {
-    [Parameter]
-    public string NotebookId { get; set; }
-}
