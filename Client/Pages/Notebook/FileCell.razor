@@ -1,0 +1,25 @@
+@inject HttpClient Http
+
+<div class="file">
+    <span>@Cell.Content</span>:
+    <InputFile OnChange="SupplyFileAsync" />
+    <div>@status</div>
+</div>
+
+@code {
+    [Parameter]
+    public blazoract.Shared.Cell Cell { get; set; }
+
+    private string status;
+
+    private async Task SupplyFileAsync(InputFileChangeEventArgs eventArgs)
+    {
+        using var fileStream = eventArgs.File.OpenReadStream(maxAllowedSize: 5*1024*1024);
+
+        status = $"Sending {eventArgs.File.Size} bytes...";
+        var url = $"api/code/uploadfile?notebookId={Cell.NotebookId}&variable={Cell.Content}";
+        await Http.PostAsync(url, new StreamContent(fileStream));
+
+        status = $"Finished sending {eventArgs.File.Size} bytes.";
+    }
+}

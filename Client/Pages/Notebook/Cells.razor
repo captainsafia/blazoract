@@ -9,14 +9,18 @@
             var cell = notebook.Cells[index];
             if (cell.Type == CellType.Code)
             {
-                <CodeCell @key="@cell" Cell="@cell" OnCodeChange="SaveNotebook" />
+                <CodeCell @key="@cell" Cell="@cell" OnCodeChange="SaveNotebook"></CodeCell>
+            }
+            else if (cell.Type == CellType.File)
+            {
+                <FileCell @key="@cell" Cell="@cell"></FileCell>
             }
             else
             {
-                <TextCell @key="@cell" Cell="@cell" />
+                <TextCell @key="@cell" Cell="@cell"></TextCell>
             }
 
-            <NewCell Position="@index" NotebookId="@NotebookId" />
+            <NewCell Position="@index" Notebook="@notebook"></NewCell>
         }
     }
 </div>

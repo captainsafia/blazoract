@@ -21,6 +21,7 @@ namespace blazoract.Shared
     public enum CellType
     {
         Code,
-        Text
+        Text,
+        File,
     }
 }
