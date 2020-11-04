@@ -1,19 +1,21 @@
 ﻿<div class="scroller">
     <table>
         <Virtualize Items="Data" Context="entry">
-            <tr @key="entry">
-                @if (entry is Array row) // 2D array
-                {
-                    foreach (var cell in row)
+            @if (entry is Array row) // 2D array
+            {
+                <tr @key="entry">
+                    @foreach (var cell in row)
                     {
                         <td>@cell</td>
                     }
-                }
-                else // Any other case
-                {
+                </tr>
+            }
+            else // Any other case
+            {
+                <tr>
                     <td>@entry</td>
-                }
-            </tr>
+                </tr>
+            }
         </Virtualize>
     </table>
 </div>
