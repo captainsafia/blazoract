@@ -4,6 +4,10 @@
     {
         <ErrorDisplay Result="Result"></ErrorDisplay>
     }
+    else if (_deserializedOutput is string str)
+    {
+        <FallbackDisplay OutputToString="@str"></FallbackDisplay>
+    }
     else if (_deserializedOutput is ICollection<object> objectCollection)
     {
         <ArrayDisplay Data="@objectCollection"></ArrayDisplay>
