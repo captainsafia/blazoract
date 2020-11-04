@@ -93,6 +93,26 @@ namespace blazoract.Api
             return new OkObjectResult(result);
         }
 
+        [FunctionName("UploadFile")]
+        public async Task<IActionResult> UploadFile(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "code/uploadfile")] HttpRequest req,
+            ILogger log)
+        {
+            using var requestData = new MemoryStream();
+            await req.Body.CopyToAsync(requestData);
+
+            // TODO: Is there a way to copy data into the kernel without stringification?
+            var requestDataBase64 = Convert.ToBase64String(new Span<byte>(requestData.GetBuffer(), 0, (int)requestData.Length));
+
+            var notebookId = req.Query["notebookId"].First();
+            var variable = req.Query["variable"].First();
+            var kernel = _kernels.GetKernelForNotebook(notebookId);
+
+            var code = $"var {variable} = Convert.FromBase64String(\"{requestDataBase64}\");";
+            var request = await kernel.SendAsync(new SubmitCode(code), CancellationToken.None);
+            return new OkResult();
+        }
+
         // TODO: Avoid duplication by changing MonacoRazor to target 3.0 or moving shared types to seperate package.
         public enum CompletionItemKind : int
         {

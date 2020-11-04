@@ -1,0 +1,14 @@
+.file {
+    display: table;
+    background-color: #eee;
+    padding: 1em 2em;
+    margin: 1em auto;
+}
+
+span {
+    font-family: monospace;
+}
+
+::deep input[type=file] {
+    margin-left: 3em;
+}
