@@ -5,7 +5,7 @@
 	},
 	"DEMO: Info background": {
 		"prefix": "demo-infobackground",
-		"body": ["background: url('dotnet.png') bottom 20px right 40px / 250px no-repeat, url('wave.png') bottom center/contain no-repeat;"]
+		"body": ["background: url('dotnet.png') bottom 10px right 30px / calc(min(200px, 35%)) no-repeat, url('wave.png') bottom center/contain no-repeat;"]
 	},
 	"DEMO: CodeEditor tag": {
 		"prefix": "demo-codeeditor-tag",
