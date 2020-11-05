@@ -1,6 +1,7 @@
 ﻿<div class="scroller">
     <table>
         @foreach (var entry in Data)
+        {
             @if (entry is Array row) // 2D array
             {
                 <tr @key="entry">
