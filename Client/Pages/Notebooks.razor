@@ -7,10 +7,8 @@
     <MainToolbar />
 
     <Table TableItem="blazoract.Shared.Notebook" Items="notebooks" RowClickAction="ShowNotebook">
-        <Column TableItem="blazoract.Shared.Notebook" Title="Id" Field="@(x => x.NotebookId)" Sortable="true"
-            Filterable="true" Width="25%" />
         <Column TableItem="blazoract.Shared.Notebook" Title="Title" Field="@(x => x.Title)" Sortable="true"
-            Filterable="true" Width="25%" />                 
+            Filterable="true" Width="50%" />                 
         <Column TableItem="blazoract.Shared.Notebook" Title="Created At" Field="@(x => x.Created)" Sortable="true"
             Width="25%" />
         <Column TableItem="blazoract.Shared.Notebook" Title="Updated At" Field="@(x => x.Updated)" Sortable="true"
