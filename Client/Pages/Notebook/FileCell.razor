@@ -16,26 +16,10 @@
     {
         using var fileStream = eventArgs.File.OpenReadStream(maxAllowedSize: 5*1024*1024);
 
-        status = $"Sending {FormatFileSize(eventArgs.File.Size)}...";
+        status = $"Sending {eventArgs.File.Size.ToDisplayString()}...";
         var url = $"api/code/uploadfile?notebookId={Cell.NotebookId}&variable={Cell.Content}";
         await Http.PostAsync(url, new StreamContent(fileStream));
 
-        status = $"Finished sending {FormatFileSize(eventArgs.File.Size)}.";
-    }
-
-    private string FormatFileSize(long fileSizeBytes)
-    {
-        int scale = 1024;
-        string[] units = new string[] { "gigabytes", "megabytes", "kilobytes", "bytes" };
-        long max = (long)Math.Pow(scale, units.Length - 1);
-
-        foreach (var unit in units)
-        {
-            if (fileSizeBytes > max)
-                return $"{decimal.Divide(fileSizeBytes, max):##.##} {unit}";
-
-            max /= scale;
-        }
-        return "0 bytes";
+        status = $"Finished sending {eventArgs.File.Size.ToDisplayString()}";
     }
 }
