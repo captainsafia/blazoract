@@ -3,7 +3,7 @@
 <div class="file">
     <span>@Cell.Content</span>:
     
-    <em>[TODO: Accept file data]</em>
+    <InputFile OnChange="@HandleFileChosenAsync" />
 
     <div>@status</div>
 </div>
@@ -13,4 +13,16 @@
     public blazoract.Shared.Cell Cell { get; set; }
 
     private string status = null;
+
+    private async Task HandleFileChosenAsync(InputFileChangeEventArgs eventArgs)
+    {
+        status = $"Sending {eventArgs.File.Size.ToDisplayString()}...";
+    
+        // Stream the data directly to the backend API
+        using var fileStream = eventArgs.File.OpenReadStream(maxAllowedSize: 5*1024*1024);
+        var url = $"api/code/uploadfile?notebookId={Cell.NotebookId}&variable={Cell.Content}";
+        await Http.PostAsync(url, new StreamContent(fileStream));
+    
+        status = $"Finished sending {eventArgs.File.Size.ToDisplayString()}";
+    }
 }
