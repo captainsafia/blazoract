@@ -1,0 +1,22 @@
+{
+   // Use IntelliSense to find out which attributes exist for C# debugging
+   // Use hover for the description of the existing attributes
+   // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+   "version": "0.2.0",
+   "configurations": [
+    {
+        "name": "Attach to Blazor WebAssembly App",
+        "type": "blazorwasm",
+        "request": "attach",
+        "cwd": "${workspaceFolder}/Client",
+        "url": "https://localhost:5001",
+        "browser": "edge"
+    },
+    {
+        "name": "Attach to .NET Functions",
+        "type": "coreclr",
+        "request": "attach",
+        "processId": "${command:pickProcess}"
+    }
+]
+}
