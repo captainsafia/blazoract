@@ -22,6 +22,7 @@
 
         status = $"Finished sending {FormatFileSize(eventArgs.File.Size)}.";
     }
+
     private string FormatFileSize(long fileSizeBytes)
     {
         int scale = 1024;
@@ -35,6 +36,6 @@
 
             max /= scale;
         }
-        return "0 B";
+        return "0 bytes";
     }
 }
