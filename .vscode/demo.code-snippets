@@ -1,0 +1,53 @@
+{
+	"DEMO: Button style": {
+		"prefix": "demo-buttonstyle",
+		"body": ["background-color: #19b5fe;\ncolor: white;\nborder: none;\npadding: 0.4rem 1.2rem;\nborder-radius: 4px;"]
+	},
+	"DEMO: Info background": {
+		"prefix": "demo-infobackground",
+		"body": ["background: url('dotnet.png') bottom 20px right 40px / 250px no-repeat, url('wave.png') bottom center/contain no-repeat;"]
+	},
+	"DEMO: CodeEditor tag": {
+		"prefix": "demo-codeeditor-tag",
+		"body": ["<CodeEditor @bind-Code=\"CellContent\" />"]
+	},
+	"DEMO: CodeEditor OnCompletionsRequested attr": {
+		"prefix": "demo-codeeditor-oncompletionsrequested",
+		"body": ["OnCompletionsRequested=\"GetCompletionsAsync\""]
+	},
+	"DEMO: CodeEditor GetCompletionsAsync": {
+		"prefix": "demo-codeeditor-getcompletionsasync",
+		"body": [
+			"private async Task<Suggestion[]> GetCompletionsAsync(string value, Position position)",
+			"{",
+			"    var response = await Http.PostAsJsonAsync(\"api/code/completions\", new GetCompletionsRequest",
+			"    {",
+			"        NotebookId = Cell.NotebookId,",
+			"        Code = value,",
+			"        Column = position.Column,",
+			"        LineNumber = position.LineNumber",
+			"    });",
+			"",
+			"    return await response.Content.ReadFromJsonAsync<Suggestion[]>();",
+			"}"]
+	},
+	"DEMO: InputFile tag": {
+		"prefix": "demo-inputfile-tag",
+		"body": ["<InputFile OnChange=\"@HandleFileChosenAsync\" />"]
+	},
+	"DEMO: InputFile HandleFileChosenAsync": {
+		"prefix": "demo-inputfile-handlefilechosenasync",
+		"body": [
+			"private async Task HandleFileChosenAsync(InputFileChangeEventArgs eventArgs)",
+    		"{",
+        	"    using var fileStream = eventArgs.File.OpenReadStream(maxAllowedSize: 5*1024*1024);",
+			"",
+        	"    status = $\"Sending {eventArgs.File.Size.ToDisplayString()}...\";",
+        	"    var url = $\"api/code/uploadfile?notebookId={Cell.NotebookId}&variable={Cell.Content}\";",
+        	"    await Http.PostAsync(url, new StreamContent(fileStream));",
+			"",
+        	"    status = $\"Finished sending {eventArgs.File.Size.ToDisplayString()}\";",
+    		"}"
+		]
+	}
+}
