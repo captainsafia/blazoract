@@ -1,4 +1,13 @@
 .info {
     padding: 2rem 4rem;
     flex-grow: 1;
+    background: url('dotnet.png') bottom 10px right 30px / calc(min(200px, 35%)) no-repeat, url('wave.png') bottom center/contain no-repeat;
+}
+
+button {
+    background-color: #19b5fe;
+    color: white;
+    border: none;
+    padding: 0.4rem 1.2rem;
+    border-radius: 4px;
 }
