@@ -1,11 +1,4 @@
 .info {
     padding: 2rem 4rem;
-}
-
-button {
-    background-color: #19b5fe;
-    color: white;
-    border: none;
-    padding: 0.4rem 1.2rem;
-    border-radius: 4px;
+    flex-grow: 1;
 }

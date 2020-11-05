@@ -4,9 +4,10 @@
     box-sizing: border-box;
 }
 
-body {
+html, body, #app, .page {
     font-family: 'Source Sans Pro', sans-serif;
     margin: 0;
+    height: 100%;
 }
 
 #blazor-error-ui {
