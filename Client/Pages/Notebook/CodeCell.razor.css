@@ -7,12 +7,12 @@
     display: flex;
 }
 
-input {
+textarea {
     flex-grow: 1;
-    padding: 10px;
     border: 0;
     outline: 0;
     font-family: monospace;
+    min-height: 150px;
 }
 
 ::deep .editor {
