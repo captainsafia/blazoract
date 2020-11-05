@@ -5,9 +5,13 @@
 
 table {
     width: 100%;
+    table-layout: fixed;
 }
 
 td {
     border: 1px solid gray;
     padding: 4px 8px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
