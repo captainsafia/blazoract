@@ -1,6 +1,6 @@
 # blazoract
 
-Blazoract is an interactive notebook user interface implemented in Blazor WebAssembly. It combines some features in Blazor released in .NET 5, such as virtualization and CSS isolation, and includes a kernel backend powered by .NET Interactive.
+Blazoract is an interactive notebook user interface implemented in Blazor WebAssembly. It combines some features in Blazor released in .NET 5, such as virtualization and CSS isolation, and includes a kernel backend powered by [.NET Interactive](https://github.com/dotnet/interactive).
 
 ## Development Setup
 
