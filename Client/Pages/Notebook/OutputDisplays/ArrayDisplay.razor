@@ -1,7 +1,6 @@
 ﻿<div class="scroller">
     <table>
-        @foreach (var entry in Data)
-        {
+        <Virtualize Items="Data" Context="entry">
             @if (entry is Array row) // 2D array
             {
                 <tr @key="entry">
@@ -17,7 +16,7 @@
                     <td>@entry</td>
                 </tr>
             }
-        }
+        </Virtualize>
     </table>
 </div>
 
