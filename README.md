@@ -1,7 +1,5 @@
 # blazoract
 
-:warning: Blazoract is currently under-development.
-
 Blazoract is an interactive notebook user interface implemented in Blazor WebAssembly. It combines some features in Blazor released in .NET 5, such as virtualization and CSS isolation, and includes a kernel backend powered by .NET Interactive.
 
 ## Development Setup
@@ -30,7 +28,7 @@ $ func start --build
 
 5. Navigate to https://localhost:5001 where the contents of the default notebook should load.
 
-![Screen Shot 2020-10-25 at 10 03 24 PM](https://user-images.githubusercontent.com/1857993/97135602-f194b300-170d-11eb-87e4-af81bda68ad5.png)
+![image](https://user-images.githubusercontent.com/1857993/98490947-18f87f00-21e8-11eb-889f-db78c79b5a9b.png)
 
 ## License
 
