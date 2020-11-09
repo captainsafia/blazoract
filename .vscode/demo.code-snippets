@@ -9,11 +9,8 @@
 	},
 	"DEMO: CodeEditor tag": {
 		"prefix": "demo-codeeditor-tag",
-		"body": ["<CodeEditor @bind-Code=\"CellContent\" />"]
-	},
-	"DEMO: CodeEditor OnCompletionsRequested attr": {
-		"prefix": "demo-codeeditor-oncompletionsrequested",
-		"body": ["OnCompletionsRequested=\"GetCompletionsAsync\""]
+		"body": ["<CodeEditor @bind-Code=\"CellContent\"",
+				 "            OnCompletionsRequested=\"GetCompletionsAsync\" />"]
 	},
 	"DEMO: CodeEditor GetCompletionsAsync": {
 		"prefix": "demo-codeeditor-getcompletionsasync",
