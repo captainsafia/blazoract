@@ -8,6 +8,7 @@
     <PackageReference Include="BlazorTable" Version="1.13.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="$(AspNetCorePackageVesion)" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="$(AspNetCorePackageVesion)" PrivateAssets="all" />
+    <PackageReference Include="MonacoRazor" Version="1.0.0-20201105.1" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0-rc.2.20465.7" />
   </ItemGroup>
 
