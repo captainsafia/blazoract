@@ -1,5 +1,5 @@
 <Project>
     <PropertyGroup>
-        <AspNetCorePackageVesion>5.0.0-rc.2.20465.8</AspNetCorePackageVesion>
+        <AspNetCorePackageVesion>5.0.0</AspNetCorePackageVesion>
     </PropertyGroup>
 </Project>
